@@ -1,0 +1,11 @@
+sam.command
+	.new("whitelist")
+	:SetPermisson("whitelist", "superadmin")
+	:DisallowConsole()
+	:SetCategory("Simple Whitelist")
+	:Help("Opens the whitelist menu.")
+	:DisableNotify(true)
+	:OnExecute(function(calling_ply)
+		calling_ply:ConCommand("whitelist_menu")
+	end)
+	:End()
