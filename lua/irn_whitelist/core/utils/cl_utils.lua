@@ -1,9 +1,14 @@
 IRNWhitelist.Utils = {}
 
+--- Format string with table (Relace all 'fmt' strings from key-values into 'tbl')
+---@param str string String to format
+---@param fmt? string Format string
+---@param tbl string[] String formats
+---@return string
 function IRNWhitelist.Utils.FormatString(str, fmt, tbl)
 	fmt = isstring(fmt) and fmt or "{{%s}}"
 	if not isstring(str) then
-		return
+		return ""
 	end
 	if not istable(tbl) then
 		return str
@@ -23,6 +28,9 @@ function IRNWhitelist.Utils.FormatString(str, fmt, tbl)
 	return str
 end
 
+--- Clear sequential table from double values
+---@param tbl any[] Table to clear doubles in
+---@return table
 function IRNWhitelist.Utils.TableClearDoubles(tbl)
 	if not istable(tbl) or not table.IsSequential(tbl) then
 		return {}
@@ -40,9 +48,13 @@ function IRNWhitelist.Utils.TableClearDoubles(tbl)
 	return table.GetKeys(target_tbl)
 end
 
+--- Insert all string.gmatch values into table
+---@param str string The string to search in
+---@param pattern string The pattern to search for
+---@return table
 function IRNWhitelist.Utils.GmatchToTable(str, pattern)
 	if not isstring(str) or not isstring(pattern) then
-		return ""
+		return {}
 	end
 
 	local tbl = {}

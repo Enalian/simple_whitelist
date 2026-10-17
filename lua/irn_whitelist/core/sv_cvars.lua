@@ -2,6 +2,15 @@ IRNWhitelist.CVars = {
 	_Vars = {},
 }
 
+--- Register new ConVar
+---@param name string Name of new ConVar
+---@param default string|number Default value of new ConVar
+---@param flags? number|table ConVar flags
+---@param helptext? string Help text of new ConVar
+---@param min? number Minimum value of new ConVar
+---@param max? number Maximum value of new ConVar
+---@param on_change? function OnChange function
+---@return ConVar|nil
 function IRNWhitelist.CVars:New(name, default, flags, helptext, min, max, on_change)
 	if not isstring(name) then
 		return
@@ -30,22 +39,31 @@ function IRNWhitelist.CVars:New(name, default, flags, helptext, min, max, on_cha
 	return cvar
 end
 
+--- Upper first char of input string
+---@param str string Input string
+---@return string
 local function first_char_upper(str)
 	if not isstring(str) then
-		return
+		return ""
 	end
 
 	str = str:gsub("^%l", string.upper)
 	return str
 end
 
-local function default_or(default, new_value)
-	if isstring(default) then
-		return (default == nil or #default < 1) and new_value or default
-	end
-	return default == nil and new_value or default
+--- If 'str' is empty return 'default 'else 'str'
+---@param str string Input string
+---@param default any Default value
+---@return any
+local function empty_or(str, default)
+	return (not isstring(str) or #str < 1) and default or str
 end
 
+--- Get ConVar value
+---@param name string The ConVar name
+---@param cv_type string The ConVar type
+---@param default? any Default value
+---@return any
 function IRNWhitelist.CVars:Get(name, cv_type, default)
 	if not isstring(name) or not isstring(cv_type) then
 		return default
@@ -71,14 +89,19 @@ function IRNWhitelist.CVars:Get(name, cv_type, default)
 
 	local val = cvar[func_name](cvar)
 	if isstring(val) then
-		default = default_or(default, "")
+		default = empty_or(default, "")
 	elseif isbool(val) then
-		default = default_or(default, false)
+		default = empty_or(default, false)
 	end
 
-	return default_or(val, default)
+	return empty_or(val, default)
 end
 
+--- Set ConVar value
+---@param name string The ConVar name
+---@param cv_type string|number|boolean The ConVar type
+---@param value? string|number|boolean New ConVar value
+---@return boolean
 function IRNWhitelist.CVars:Set(name, cv_type, value)
 	if not isstring(name) or not self:Has(name) then
 		return false
@@ -117,9 +140,12 @@ function IRNWhitelist.CVars:Set(name, cv_type, value)
 	return succ
 end
 
+--- Toggle boolean ConVar value
+---@param name string The ConVar name
+---@return boolean
 function IRNWhitelist.CVars:Toggle(name)
 	if not isstring(name) or not self._Vars[name] then
-		return
+		return false
 	end
 
 	local val = self:Get(name, "bool")
@@ -130,6 +156,9 @@ function IRNWhitelist.CVars:Toggle(name)
 	return self:Set(name, "bool", not val)
 end
 
+--- Check if ConVar exists
+---@param name string The ConVar name
+---@return boolean
 function IRNWhitelist.CVars:Has(name)
 	if not isstring(name) then
 		return false
@@ -138,6 +167,9 @@ function IRNWhitelist.CVars:Has(name)
 	return self:ConVar(name) ~= nil
 end
 
+--- Get raw ConVar type
+---@param name string The ConVar name
+---@return ConVar|nil
 function IRNWhitelist.CVars:ConVar(name)
 	if not isstring(name) then
 		return
@@ -146,6 +178,8 @@ function IRNWhitelist.CVars:ConVar(name)
 	return self._Vars[name]
 end
 
+--- Collect all ConVars values
+---@return table
 function IRNWhitelist.CVars:Collect()
 	local tbl = {}
 	for k, v in pairs(self._Vars) do
@@ -155,6 +189,9 @@ function IRNWhitelist.CVars:Collect()
 	return tbl
 end
 
+--- Apply ConVar values from table
+---@param cvrs table ConVars table (key = ConVar name, value = ConVar value)
+---@return boolean
 function IRNWhitelist.CVars:Apply(cvrs)
 	if not istable(cvrs) or table.IsSequential(cvrs) or table.IsEmpty(cvrs) then
 		return false
@@ -173,6 +210,7 @@ function IRNWhitelist.CVars:Apply(cvrs)
 	return true
 end
 
+--- Main module load function
 function IRNWhitelist.CVars:Load()
 	self:New("enable", 0, FCVAR_NOTIFY, "Enable whitelist. (1 - on, 0 - off)", 0, 1, function(_, newValue)
 		newValue = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
@@ -182,8 +220,8 @@ function IRNWhitelist.CVars:Load()
 				IRNWhitelist.Utils.SetServerPassword(IRNWhitelist.Utils.GeneratePIN(5))
 			end
 
-			local date = os.date(self:Get("date_format", "string", "%x"))
-			local time = os.date(self:Get("time_format", "string", "%X"))
+			local date = tostring(os.date(self:Get("date_format", "string", "%x")))
+			local time = tostring(os.date(self:Get("time_format", "string", "%X")))
 
 			for _, ply in ipairs(player.GetAll()) do
 				local reason = IRNWhitelist.Utils.FormatString(
@@ -197,6 +235,8 @@ function IRNWhitelist.CVars:Load()
 						["player.ip"] = IRNWhitelist.Utils.ParseIP(ply:IPAddress()),
 
 						n = "\n",
+						t = "\t",
+
 						date = date,
 						time = time,
 						datetime = string.format("%s %s", date, time),
@@ -261,7 +301,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("time_format", newValue)
 	end)
 
-	self:New("logs", 1, FCVAR_ARCHIVE, "Write action logs.", 0, 1, function(_, newValue)
+	self:New("logs", 0, FCVAR_ARCHIVE, "Write action logs.", 0, 1, function(_, newValue)
 		IRNWhitelist.Settings:Set("logs", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1))
 	end)
 

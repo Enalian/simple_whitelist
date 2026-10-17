@@ -3,6 +3,9 @@ IRNWhitelist.Files = {
 	_Path = "%s/%s",
 }
 
+--- Read RAW file content
+---@param name string File name
+---@return string
 function IRNWhitelist.Files:ReadRAW(name)
 	if not isstring(name) or #name < 1 then
 		return ""
@@ -16,6 +19,9 @@ function IRNWhitelist.Files:ReadRAW(name)
 end
 IRNWhitelist.Files.Read = IRNWhitelist.Files.ReadRAW
 
+--- Read file content as JSON
+---@param name string File name
+---@return table
 function IRNWhitelist.Files:ReadJSON(name)
 	if not name:EndsWith(".json") then
 		name = name .. ".json"
@@ -29,6 +35,9 @@ function IRNWhitelist.Files:ReadJSON(name)
 	return util.JSONToTable(ctx) or {}
 end
 
+--- Read lines from file
+---@param name string File name
+---@return string[]
 function IRNWhitelist.Files:ReadLines(name)
 	if not name:EndsWith(".txt") then
 		name = name .. ".txt"
@@ -42,6 +51,10 @@ function IRNWhitelist.Files:ReadLines(name)
 	return string.Explode("\n", ctx)
 end
 
+--- Write RAW data to file
+---@param name string File name
+---@param ctx string File data
+---@return boolean
 function IRNWhitelist.Files:WriteRAW(name, ctx)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -54,6 +67,10 @@ function IRNWhitelist.Files:WriteRAW(name, ctx)
 end
 IRNWhitelist.Files.Write = IRNWhitelist.Files.WriteRAW
 
+--- Write JSON data to file
+---@param name string File name
+---@param ctx table File data
+---@return boolean
 function IRNWhitelist.Files:WriteJSON(name, ctx)
 	if not istable(ctx) then
 		return false
@@ -65,6 +82,10 @@ function IRNWhitelist.Files:WriteJSON(name, ctx)
 	return self:WriteRAW(name, util.TableToJSON(ctx, true) or "{}")
 end
 
+--- Write lines to file
+---@param name string File name
+---@param ctx string[] File data
+---@return boolean
 function IRNWhitelist.Files:WriteLines(name, ctx)
 	if not istable(ctx) then
 		return false
@@ -76,6 +97,10 @@ function IRNWhitelist.Files:WriteLines(name, ctx)
 	return self:WriteRAW(name, table.concat(ctx, "\n"))
 end
 
+--- Append line to file
+---@param name string File name
+---@param ctx string Appending line
+---@return boolean
 function IRNWhitelist.Files:AppendLine(name, ctx)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -97,6 +122,11 @@ function IRNWhitelist.Files:AppendLine(name, ctx)
 	return file.Append(string.format(self._Path, self._Dir, name), "\n" .. ctx)
 end
 
+--- Remove line from file
+---@param name string File name
+---@param ctx string Removing line
+---@param no_patterns? boolean Ignore patterns
+---@return boolean
 function IRNWhitelist.Files:RemoveLine(name, ctx, no_patterns)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -130,6 +160,9 @@ function IRNWhitelist.Files:RemoveLine(name, ctx, no_patterns)
 	return self:WriteLines(name, new_lines)
 end
 
+--- Remove duplicate lines from file
+---@param name string File name
+---@return boolean
 function IRNWhitelist.Files:RemoveDuplicateLines(name)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -153,6 +186,11 @@ function IRNWhitelist.Files:RemoveDuplicateLines(name)
 	return self:WriteLines(name, table.GetKeys(new_lines))
 end
 
+--- Check if line exists at file
+---@param name string File name
+---@param ctx string Line for check
+---@param no_patterns? boolean Ignore patterns
+---@return boolean
 function IRNWhitelist.Files:LineExists(name, ctx, no_patterns)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -184,6 +222,12 @@ function IRNWhitelist.Files:LineExists(name, ctx, no_patterns)
 	return false
 end
 
+--- Replace line in file
+---@param name string File name
+---@param x string Line for replacing
+---@param y string Line to replace
+---@param no_patterns? boolean Ignore patterns
+---@return boolean
 function IRNWhitelist.Files:ReplaceLine(name, x, y, no_patterns)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -207,6 +251,10 @@ function IRNWhitelist.Files:ReplaceLine(name, x, y, no_patterns)
 	return self:WriteRAW(name, no_patterns and ctx:Replace(x, y) or ctx:gsub(x, y))
 end
 
+--- Create new file
+---@param name string File name
+---@param ctx string File content
+---@return boolean
 function IRNWhitelist.Files:Create(name, ctx)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -225,6 +273,9 @@ function IRNWhitelist.Files:Create(name, ctx)
 	return file.Write(string.format(self._Path, self._Dir, name), ctx)
 end
 
+--- Check if file exists
+---@param name string File name
+---@return boolean
 function IRNWhitelist.Files:Exists(name)
 	if not isstring(name) or #name < 1 then
 		return false
@@ -236,6 +287,7 @@ function IRNWhitelist.Files:Exists(name)
 	return file.Exists(string.format(self._Path, self._Dir, name), "DATA")
 end
 
+--- Main module load function
 function IRNWhitelist.Files:Load()
 	if not file.IsDir(self._Dir, "DATA") then
 		file.CreateDir(self._Dir)

@@ -2,6 +2,9 @@ IRNWhitelist.Players = {
 	_SQLTable = "whitelist_nicknames",
 }
 
+--- Check if SteamID valid
+---@param steamid string Input SteamID
+---@return boolean
 function IRNWhitelist.Players.IsValidSteamID(steamid)
 	if not isstring(steamid) then
 		return false
@@ -10,6 +13,9 @@ function IRNWhitelist.Players.IsValidSteamID(steamid)
 	return steamid:match("^STEAM_%d:%d:%d+$") ~= nil
 end
 
+--- Check if SteamID64 valid
+---@param steamid64 string Input SteamID64
+---@return boolean
 function IRNWhitelist.Players.IsValidSteamID64(steamid64)
 	if not isstring(steamid64) then
 		return false
@@ -23,6 +29,9 @@ function IRNWhitelist.Players.IsValidSteamID64(steamid64)
 	return steamid64_parse.is_valid(steamid64)
 end
 
+--- Get player by nickname
+---@param name string Input name
+---@return Player|nil
 function IRNWhitelist.Players.GetByNickname(name)
 	local players = {}
 	for _, v in ipairs(player.GetAll()) do
@@ -34,10 +43,11 @@ function IRNWhitelist.Players.GetByNickname(name)
 	if #players == 1 then
 		return players[1]
 	end
-
-	return false
 end
 
+--- Set player nickname (for database)
+---@param steamid64 string Player SteamID64
+---@param name string Player nickname
 function IRNWhitelist.Players:SetNickname(steamid64, name)
 	if not self.IsValidSteamID64(steamid64) then
 		return
@@ -56,6 +66,9 @@ function IRNWhitelist.Players:SetNickname(steamid64, name)
 	)
 end
 
+--- Get player nickname from database
+---@param steamid64 string Player SteamID64
+---@return string|nil
 function IRNWhitelist.Players:GetNickname(steamid64)
 	if not self.IsValidSteamID64(steamid64) then
 		return steamid64
@@ -71,6 +84,10 @@ function IRNWhitelist.Players:GetNickname(steamid64)
 	) or steamid64
 end
 
+--- Get player from any input
+---@param input Player|string|number Any input (SteamID, SteamID64, Nickname, AccountID, UserID, EntIndex)
+---@return string|nil
+---@return string|nil
 function IRNWhitelist.Players:FromAny(input)
 	if not isstring(input) and not isnumber(input) then
 		return nil, nil
@@ -124,6 +141,7 @@ function IRNWhitelist.Players:FromAny(input)
 	return nil, nil
 end
 
+--- Main module load function
 function IRNWhitelist.Players:Load()
 	sql.Query(
 		string.format(

@@ -1,6 +1,27 @@
+--- Check player access
+---@return boolean
+local function hasAccess()
+	local ply = LocalPlayer()
+	if istable(ulx) then
+		return ply:query("ulx whitelist")
+	elseif istable(SAM) or istable(Lyn) then
+		return ply:HasPermission("whitelist")
+	else
+		return ply:IsAdmin()
+	end
+end
+
+local color_red = Color(255, 162, 162)
+
 concommand.Add("whitelist_menu", function()
 	if not istable(Mantle) then
-		chat.AddText("[SimpleWhitelist] Mantle dont installed on this server, use server console commands.")
+		chat.AddText(color_red, IRNWhitelist.Lang:FormatString("[SimpleWhitelist] %menu.not_mantle%"))
+		surface.PlaySound("buttons/button8.wav")
+		return
+	end
+
+	if not hasAccess() then
+		chat.AddText(color_red, IRNWhitelist.Lang:FormatString("[SimpleWhitelist] %menu.not_rights%"))
 		surface.PlaySound("buttons/button2.wav")
 		return
 	end

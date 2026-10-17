@@ -14,7 +14,7 @@ return {
 		whitelist_players_empty = "There are no players in the whitelist.",
 		whitelist_settings_saved = "Whitelist settings was saved into 'data/simple_whitelist/settings.json' file.",
 		whitelist_settiings_loaded = "Whitelist settings were loaded from the file.",
-		whitelist_status = "Whitelist is now {{1}}.",
+		whitelist_status = "Whitelist is now {{1}}.\nServer language: {{2}}.\n\nPassword join is now {{3}}.\nOn whitelist enabling players and bots {{4}}.\nOn whitelist enabling bots {{5}}.\nConsole messages logging is now {{6}}.\nSave player names in DB is now {{7}}.\nSave this settings into file is now {{8}}.\n\nPlayer kick reason (if him not whitelisted): {{9}}.\nKick reason while enabling whitelist (if player not whitelisted): {{10}}.\n\nTime format: {{11}}.\nDate format: {{12}}.",
 
 		help_add = "Usage: whitelist_add <SteamID(64)/Name> [once (1/0)]",
 		help_remove = "Usage: whitelist_remove <SteamID(64)/Name>",
@@ -31,6 +31,8 @@ return {
 		whitelist_statuses = {
 			on = "enabled",
 			off = "disabled",
+			kicked = "will be kicked",
+			not_kicked = "not be kicked",
 		},
 
 		flags = {
@@ -95,5 +97,7 @@ return {
 		column_sid64 = "SteamID64",
 		column_once = "Once?",
 		not_sid64 = "This is a not SteamID64.",
+		not_rights = "You don't have rights to do that.",
+		not_mantle = "Mantle dont installed on this server, use server console commands.",
 	},
 }

@@ -1,3 +1,6 @@
+--- If function at first argument wait self
+---@param func function Needed function
+---@return boolean
 local function expects_self(func)
 	local info = debug.getinfo(func, "uS")
 
@@ -12,6 +15,13 @@ local function expects_self(func)
 	return success and (arg_name == "self")
 end
 
+--- Easy API maker
+---@param name string Function name ('*' = all functions)
+---@param from_tbl table Table to copy function from
+---@param to_tbl table Table to copy function to
+---@param new_name string? New name of function
+---@param bind_original_self? boolean Bind original self
+---@param ignore_names? string[] Ignore names
 local function easyApi(name, from_tbl, to_tbl, new_name, bind_original_self, ignore_names)
 	if not isstring(name) or not istable(from_tbl) or not istable(to_tbl) then
 		return
@@ -58,46 +68,70 @@ local function easyApi(name, from_tbl, to_tbl, new_name, bind_original_self, ign
 	end
 end
 
+--- Save addon settings
 function IRNWhitelist:SaveSettings()
 	self.Settings:Save()
 end
 
+--- Read addon settings
+---@return table
 function IRNWhitelist:ReadSettings()
 	return self.Settings.Read()
 end
 
+--- Apply addon settings from settings file
 function IRNWhitelist:ApplySettings()
 	self.Settings:Apply()
 end
 
+--- Write addon settings to file
+---@param settings table New settings
 function IRNWhitelist:WriteSettings(settings)
 	self.Settings:Write(settings)
 end
 
+--- Check if settings file and all parameters exists
+---@return boolean
 function IRNWhitelist:SettingsExists()
 	return self.Settings:Exists()
 end
 
+--- Set new addon language
+---@param lang string New language
 function IRNWhitelist:SetLanguage(lang)
 	self.Lang:Set(lang)
 end
 
+--- Get addon language
+---@return string
 function IRNWhitelist:GetLanguage()
-	return self.Lang:Get()
+	return self.Lang:GetNow()
 end
 
+--- Get language phrase
+---@param phrase string Phrase
+---@param ... any Format strings
+---@return string
 function IRNWhitelist:GetPhrase(phrase, ...)
 	return self.Lang:FormatPhrase(phrase, ...)
 end
 
+--- Get addon languages
+---@return string[]
 function IRNWhitelist:GetLanguages()
 	return self.Lang.GetLanguages()
 end
 
+--- Check if language has in addon
+---@param lang string Needed language
+---@return boolean
 function IRNWhitelist:HasLanguage(lang)
 	return self.Lang:Has(lang)
 end
 
+--- Remove player from whitelist
+---@param steamid64 string Player SteamID64
+---@param need_kick? boolean Need kick player?
 function IRNWhitelist:RemovePlayer(steamid64, need_kick)
 	if not IRNWhitelist.Players.IsValidSteamID64(steamid64) then
 		return
@@ -105,7 +139,7 @@ function IRNWhitelist:RemovePlayer(steamid64, need_kick)
 	need_kick = tobool(need_kick)
 
 	local ply = player.GetBySteamID64(steamid64)
-	if IsValid(ply) and need_kick then
+	if IsValid(ply) and need_kick and self.Whitelist.IsOn() then
 		local date = os.date(self:Get("date_format", "string", "%x"))
 		local time = os.date(self:Get("time_format", "string", "%X"))
 
@@ -139,6 +173,7 @@ IRNWhitelist.Commands:Load()
 IRNWhitelist.Players:Load()
 IRNWhitelist.Settings:Load()
 IRNWhitelist.Whitelist:Load()
+
 easyApi("*", IRNWhitelist.Whitelist, IRNWhitelist, nil, nil, { "Load" })
 
 MsgC(Color(0, 255, 0), IRNWhitelist.Lang:FormatPhrase("messages.loaded", tostring(IRNWhitelist.VERSION)) .. "\n")

@@ -1,5 +1,8 @@
 util.AddNetworkString("irn_whitelist.command")
 
+--- Check player access
+---@param ply Player Checking player
+---@return boolean
 local function hasAccess(ply)
 	if not IsValid(ply) then
 		return false

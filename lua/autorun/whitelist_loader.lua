@@ -18,6 +18,11 @@ local function run_sh(path)
 	end
 end
 
+--- Main loader function
+---@param fld? string Folder to load in
+---@param do_print? boolean Ignore LOADING_PRINT
+---@param ignore_exclude? boolean Ignore EXCLUDE_FOLDERS and EXCLUDE_FILES
+---@param force_side? "sv" | "cl" | "sh" | "cs" Force loading side
 local function Loader(fld, do_print, ignore_exclude, force_side)
 	fld = fld or "*"
 
@@ -27,7 +32,7 @@ local function Loader(fld, do_print, ignore_exclude, force_side)
 	if isstring(force_side) and not table.HasValue({ "sv", "cl", "sh", "cs" }, force_side:lower()) then
 		ErrorNoHalt(
 			string.format(
-				"[%s] Параметр 'force_side' указан неверно. Допустимые значения: sv, cl, cs, sh",
+				"Параметр 'force_side' указан неверно. Допустимые значения: sv, cl, cs, sh",
 				MAIN_FOLDER:upper()
 			)
 		)

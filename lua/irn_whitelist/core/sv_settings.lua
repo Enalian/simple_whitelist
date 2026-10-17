@@ -14,6 +14,10 @@ IRNWhitelist.Settings = {
 	},
 }
 
+--- Change parameter value
+---@param param string Parameter name
+---@param value string|number|boolean Parameter value
+---@return boolean
 function IRNWhitelist.Settings:Set(param, value)
 	if not isstring(param) or not table.HasValue(table.GetKeys(self._Allowed), param:lower()) then
 		return false
@@ -36,6 +40,8 @@ function IRNWhitelist.Settings:Set(param, value)
 	return self:Write(settings)
 end
 
+--- Save settings
+---@return boolean
 function IRNWhitelist.Settings:Save()
 	local settings = {}
 	for cvar_name, cvar_type in pairs(self._Allowed) do
@@ -45,10 +51,15 @@ function IRNWhitelist.Settings:Save()
 	return self:Write(settings)
 end
 
+--- Read settings
+---@return table
 function IRNWhitelist.Settings.Read()
 	return IRNWhitelist.Files:ReadJSON("settings")
 end
 
+--- Write new settings to file
+---@param settings table New settings
+---@return boolean
 function IRNWhitelist.Settings:Write(settings)
 	if not IRNWhitelist.CVars:Get("save_settings", "bool", false) then
 		return false
@@ -70,6 +81,8 @@ function IRNWhitelist.Settings:Write(settings)
 	return IRNWhitelist.Files:WriteJSON("settings", settings)
 end
 
+--- Check if file and all parameters exists
+---@return boolean
 function IRNWhitelist.Settings:Exists()
 	if not IRNWhitelist.Files:Exists("settings.json") then
 		return false
@@ -89,6 +102,7 @@ function IRNWhitelist.Settings:Exists()
 	return true
 end
 
+--- Apply settings
 function IRNWhitelist.Settings:Apply()
 	for name, v in pairs(self.Read()) do
 		if not self._Allowed[name] then
@@ -99,6 +113,8 @@ function IRNWhitelist.Settings:Apply()
 	end
 end
 
+--- Collect all settings into table (key = parameter name, value = parameter value)
+---@return table
 function IRNWhitelist.Settings:Collect()
 	local tbl = {}
 	for k, v in pairs(IRNWhitelist.CVars:Collect()) do
@@ -119,6 +135,7 @@ function IRNWhitelist.Settings:Collect()
 	return tbl
 end
 
+--- Main module load function
 function IRNWhitelist.Settings:Load()
 	hook.Add("PostGamemodeLoaded", "irn_whitelist.save_settings", function()
 		if self:Exists() then

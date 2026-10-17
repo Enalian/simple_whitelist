@@ -1,5 +1,8 @@
 IRNWhitelist.Utils = {}
 
+--- Load whitelist module
+---@param name string Module filename (without .lua and sv_)
+---@return any
 function IRNWhitelist.Utils.Module(name)
 	if not isstring(name) then
 		return {}
@@ -13,6 +16,11 @@ function IRNWhitelist.Utils.Module(name)
 	return include(path)
 end
 
+--- Format string with table (Relace all 'fmt' strings from key-values into 'tbl')
+---@param str string String to format
+---@param fmt? string Format string
+---@param tbl string[] String formats
+---@return string
 function IRNWhitelist.Utils.FormatString(str, fmt, tbl)
 	if not isstring(str) then
 		return ""
@@ -36,6 +44,10 @@ function IRNWhitelist.Utils.FormatString(str, fmt, tbl)
 	return str
 end
 
+--- Translate number (integer) to bool value
+---@param int number The number to convert
+---@param rev? boolean Reverse output (1 = false, 0 = true)
+---@return boolean
 function IRNWhitelist.Utils.Int2Bool(int, rev)
 	if not isnumber(int) then
 		return false
@@ -47,6 +59,9 @@ function IRNWhitelist.Utils.Int2Bool(int, rev)
 	return rev and int == 0 or int == 1
 end
 
+--- Generate server password pin-code
+---@param digits? number Digits count
+---@return string
 function IRNWhitelist.Utils.GeneratePIN(digits)
 	if not isnumber(digits) then
 		return ""
@@ -61,6 +76,8 @@ function IRNWhitelist.Utils.GeneratePIN(digits)
 	return pin
 end
 
+--- Set or reset server password (for reset - 'password' = nil or 'password' = "")
+---@param password string? The new server password
 function IRNWhitelist.Utils.SetServerPassword(password)
 	if password == nil or (isstring(password) and #password < 1) then
 		RunConsoleCommand("sv_password", "")
@@ -69,14 +86,20 @@ function IRNWhitelist.Utils.SetServerPassword(password)
 	end
 end
 
+--- Get IP from IP:Port
+---@param ipa string IP:Port
+---@return string
 function IRNWhitelist.Utils.ParseIP(ipa)
 	if not isstring(ipa) then
-		return {}
+		return ""
 	end
 
 	return string.Explode(":", ipa)[1]
 end
 
+--- Write string into a log file
+---@param str string The string to log
+---@return boolean
 function IRNWhitelist.Utils.Log(str)
 	if not isstring(str) then
 		return false
@@ -92,6 +115,9 @@ function IRNWhitelist.Utils.Log(str)
 	return IRNWhitelist.Files:AppendLine("logs", string.format("[%s] [%s] %s", date, time, str))
 end
 
+--- Clear sequential table from double values
+---@param tbl any[] Table to clear doubles in
+---@return table
 function IRNWhitelist.Utils.TableClearDoubles(tbl)
 	if not istable(tbl) or not table.IsSequential(tbl) then
 		return {}
@@ -109,9 +135,13 @@ function IRNWhitelist.Utils.TableClearDoubles(tbl)
 	return table.GetKeys(target_tbl)
 end
 
+--- Insert all string.gmatch values into table
+---@param str string The string to search in
+---@param pattern string The pattern to search for
+---@return table
 function IRNWhitelist.Utils.GmatchToTable(str, pattern)
 	if not isstring(str) or not isstring(pattern) then
-		return ""
+		return {}
 	end
 
 	local tbl = {}
@@ -122,6 +152,11 @@ function IRNWhitelist.Utils.GmatchToTable(str, pattern)
 	return tbl
 end
 
+--- Generate printable player name
+---@param plyOrName Player|string Player or player name
+---@param sid64? string Player SteamID64
+---@param logs_print? boolean For logs?
+---@return string
 function IRNWhitelist.Utils.PrintPlayerName(plyOrName, sid64, logs_print)
 	if not IsValid(plyOrName) and not isstring(plyOrName) then
 		return ""

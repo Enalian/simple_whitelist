@@ -1,0 +1,17 @@
+{
+	"name": "Simple Whitelist",
+	"version": 101726,
+	"base": "garrysmod",
+    "path": "lua",
+	"depends_on": [],
+	"lua_ls": {
+		"diagnostics": {
+			"globals": [],
+			"disable": [
+				"syntax-error",
+				"undefined-global",
+				"lowercase-global"
+			]
+		}
+	}
+}
