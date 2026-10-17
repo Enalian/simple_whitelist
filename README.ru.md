@@ -15,7 +15,7 @@ English version of this file you can read [here](https://github.com/Enalian/simp
 ## 🍂 Консольные команды
 
 | Команда | Описание |
-|:---:|:---|
+|---|---|
 | `whitelist_on` | Включить белый список. |
 | `whitelist_off` | Выключить белый список. |
 | `whitelist_toggle` | Переключить (включить или выключить) белый список. |

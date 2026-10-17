@@ -15,7 +15,7 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 ## 🍂 Console commands
 
 | Command | Description |
-|:---:|:---|
+|---|---|
 | `whitelist_on` | Enable whitelist. |
 | `whitelist_off` | Disable whitelist. |
 | `whitelist_toggle` | Toggle (on or off) whitelist. |
@@ -48,17 +48,17 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 
 Time formats for `whitelist_date_format` and `whitelist_time_format` can be found [here](https://wiki.facepunch.com/gmod/os.date#arguments).
 
-## 📩 Установка
+## 📩 Installation
 
 ### Steam Workshop
 
 It is recommended to subscribe on the [Workshop]() and add the addon to your server collection. This will allow the addon to update automatically without manual downloading.
 
-### Самостоятельная загрузка
+### Manual Download
 
 Grab the [latest release](https://github.com/Enalian/simple_whitelist/releases/latest/download/simple_whitelist.zip) from the [Releases](https://github.com/Enalian/simple_whitelist/releases) page and extract it into your `garrysmod/addons/` folder.
 
-## 📝 Лицензия
+## 📝 License
 
 This project is under the MIT terms - see the [LICENSE](https://github.com/Enalian/simple_whitelist/blob/master/LICENSE) file for details.
 
