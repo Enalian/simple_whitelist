@@ -1,0 +1,29 @@
+name: Deploy MkDocs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Чекаут репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Установка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Установка MkDocs и плагинов
+        run: pip install mkdocs-material mkdocs-awesome-pages-plugin mkdocs-git-revision-date-localized-plugin
+
+      - name: Деплой сайта
+        run: mkdocs gh-deploy --force

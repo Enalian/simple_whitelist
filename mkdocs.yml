@@ -1,0 +1,65 @@
+site_name: Simple Whitelist
+site_url: https://enalian.github.io/simple_whitelist/
+
+# Ссылка на исходники в правой части шапки
+repo_name: Simple Whitelist
+repo_url: https://github.com/Enalian/simple_whitelist
+
+theme:
+  name: material
+  language: ru
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+
+  # Включаем кнопку копирования кода
+  features:
+    - content.code.copy
+
+  # Настройка тем (Автоматическая + Кнопка переключения)
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Переключить на темную тему
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Переключить на светлую тему
+
+# Плагины: Умный поиск (RU+EN), Авто-навигация и Даты из Git
+plugins:
+  - search:
+      lang:
+        - ru
+        - en
+  - awesome-pages
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: date
+
+# Блок соцсетей в подвале (Footer)
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Enalian
+      name: Исходный код на GitHub
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/gRc4UcXwTY
+      name: Наш сервер в Discord
+
+# Расширения Markdown (Табы, Спойлеры, Блоки кода)
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true

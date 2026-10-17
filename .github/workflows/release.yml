@@ -1,0 +1,33 @@
+name: Package Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Release tag (for example, v101826)'
+        required: true
+        type: string
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Чекаут репозитория
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.version_tag || github.ref }}
+
+      - name: Создание ZIP архива
+        run: |
+          zip -r simple_whitelist.zip README* LICENSE lua/
+
+      - name: Загрузка архива в релиз
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version_tag || github.ref_name }}
+          files: simple_whitelist.zip
