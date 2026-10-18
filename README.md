@@ -12,22 +12,33 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 
 Русскую версию этого файла вы можете прочитать [здесь](https://github.com/Enalian/simple_whitelist/blob/master/README.ru.md).
 
-## 🍂 Console commands
+## 🍂 Console commands (server only)
 
-| Command | Description |
-|---|---|
-| `whitelist_on` | Enable whitelist. |
-| `whitelist_off` | Disable whitelist. |
-| `whitelist_toggle` | Toggle (on or off) whitelist. |
-| `whitelist_status` | Check whitelist settings and state. |
-| `whitelist_add <SteamID(64)/AccountID/Nickname> [Once?]` | Add player to the whitelist. |
-| `whitelist_remove <SteamID(64)/AccountID/Nickname>` | Remove player from the whitelist. |
-| `whitelist_set <SteamID(64)/AccountID/Nickname> [Once?]` | Clear the whitelist then add the player to it. |
-| `whitelist_clear` | Clear the whitelist. |
-| `whitelist_clear_duplicates` | Remove duplicate players from the whitelist. |
-| `whitelist_players` | List of all whitelisted players. |
-| `whitelist_save_settings` | Save settings to the file. |
-| `whitelist_load_settings` | Load settings from file. |
+| Command | Arguments | Description |
+|:---:|:---|:---|
+| `whitelist_on` | *No arguments* | Enable whitelist. |
+| `whitelist_off` | *No arguments* | Disable whitelist. |
+| `whitelist_toggle` | *No arguments* | Toggle (disable or enable) whitelist. |
+| `whitelist_status` | *No arguments* | Check whitelist state and settings. |
+| `whitelist_add` | `<SteamID(64)/AccountID/Nickname> [Once?]` | Add player to the whitelist. |
+| `whitelist_remove` | `<SteamID(64)/AccountID/Nickname>` | Remove player from the whitelist. |
+| `whitelist_set <SteamID(64)/AccountID/Nickname> [Once?]` | Clear whitelist and add player to it. |
+| `whitelist_clear` | *No arguments* | Clear whitelist. |
+| `whitelist_clear_duplicates` | *No arguments* | Remove duplicated players from the whitelist. |
+| `whitelist_players` | *No arguments* | Посмотреть список игроков в белом списке. |
+| `whitelist_settings_save` | *No arguments* | Save settings to the file. |
+| `whitelist_settings_load` | *No arguments* | Load settings from the file. |
+| `whitelist_joinkick_reason` | `<Reason>` | Reason for being kicked while the whitelist is enabled. |
+| `whitelist_kick_reason` | `<Reason>` | Reason for being kicked when the whitelist is enabled. |
+| `whitelist_kick` | `<1/0>` | Kick players and bots when the whitelist is enabled? (1 = Yes, 0 = No)  |
+| `whitelist_kick_bots` | `<1/0>` | Kick bots when the whitelist is enabled? (1 = Yes, 0 = No) |
+| `whitelist_password_check` | `<1/0>` | Require a password when logging into the server (while whitelists are in effect)? (1 = Yes, 0 = No) |
+| `whitelist_date_format` | `<Format>` | Date format (for reasons). |
+| `whitelist_time_format` | `<Format>` | Time format (for reasons). |
+| `whitelist_save_names` | `<1/0>` | Save player names into server DB? (1 = Yes, 0 = No) |
+| `whitelist_save_settings` | `<1/0>` | Save all settings into file? (1 = Yes, 0 = No) |
+| `whitelist_logs` | `<1/0>` | Enable all messages and actions log? (1 = Yes, 0 = No) |
+| `whitelist_language` | `<Language>` | Set server language. |
 
 ## ⚪ Fillers for reason
 

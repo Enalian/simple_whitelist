@@ -25,7 +25,7 @@ jobs:
         run: pip install mkdocs-material mkdocs-awesome-pages-plugin mkdocs-git-revision-date-localized-plugin
 
       - name: Генерация документации API
-        run: python emmylua_mkdocs.py -s lua/irn_whitelist/ -o docs --update-nav
+        run: python mkdocs/emmylua_mkdocs.py -s lua/irn_whitelist/ -o docs --update-nav
 
       - name: Коммит обновленной документации в master
         run: |
