@@ -1,9 +1,8 @@
 name: Deploy MkDocs
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
 
 permissions:
   contents: write
@@ -24,6 +23,17 @@ jobs:
 
       - name: Установка MkDocs и плагинов
         run: pip install mkdocs-material mkdocs-awesome-pages-plugin mkdocs-git-revision-date-localized-plugin
+
+      - name: Генерация документации API
+        run: python emmylua_mkdocs.py -s lua/irn_whitelist/ -o docs --update-nav
+
+      - name: Коммит обновленной документации в master
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/ mkdocs.yml
+          git commit -m "mkdocs: auto-updating API docs (new release)" || true
+          git push origin master
 
       - name: Деплой сайта
         run: mkdocs gh-deploy --force

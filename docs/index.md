@@ -1,17 +1,126 @@
-# Welcome to MkDocs
+---
+title: Home
+---
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+# API Documentation
 
-## Commands
+## [IRNWhitelist](IRNWhitelist/index.md)
+- [ApplySettings](IRNWhitelist/ApplySettings.md)
+- [GetLanguage](IRNWhitelist/GetLanguage.md)
+- [GetLanguages](IRNWhitelist/GetLanguages.md)
+- [GetPhrase](IRNWhitelist/GetPhrase.md)
+- [HasLanguage](IRNWhitelist/HasLanguage.md)
+- [ReadSettings](IRNWhitelist/ReadSettings.md)
+- [RemovePlayer](IRNWhitelist/RemovePlayer.md)
+- [SaveSettings](IRNWhitelist/SaveSettings.md)
+- [SetLanguage](IRNWhitelist/SetLanguage.md)
+- [SettingsExists](IRNWhitelist/SettingsExists.md)
+- [WriteSettings](IRNWhitelist/WriteSettings.md)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## [IRNWhitelist.Commands](IRNWhitelist_Commands/index.md)
+- [New](IRNWhitelist_Commands/New.md)
+- [Load](IRNWhitelist_Commands/Load.md)
 
-## Project layout
+## [IRNWhitelist.Console](IRNWhitelist_Console/index.md)
+- [CriticalRaw](IRNWhitelist_Console/CriticalRaw.md)
+- [ErrorRaw](IRNWhitelist_Console/ErrorRaw.md)
+- [HelpRaw](IRNWhitelist_Console/HelpRaw.md)
+- [InfoRaw](IRNWhitelist_Console/InfoRaw.md)
+- [SuccessRaw](IRNWhitelist_Console/SuccessRaw.md)
+- [WarnRaw](IRNWhitelist_Console/WarnRaw.md)
+- [Critical](IRNWhitelist_Console/Critical.md)
+- [Error](IRNWhitelist_Console/Error.md)
+- [Help](IRNWhitelist_Console/Help.md)
+- [Info](IRNWhitelist_Console/Info.md)
+- [Success](IRNWhitelist_Console/Success.md)
+- [Warn](IRNWhitelist_Console/Warn.md)
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## [IRNWhitelist.CVars](IRNWhitelist_CVars/index.md)
+- [Apply](IRNWhitelist_CVars/Apply.md)
+- [Collect](IRNWhitelist_CVars/Collect.md)
+- [ConVar](IRNWhitelist_CVars/ConVar.md)
+- [Get](IRNWhitelist_CVars/Get.md)
+- [Has](IRNWhitelist_CVars/Has.md)
+- [Load](IRNWhitelist_CVars/Load.md)
+- [New](IRNWhitelist_CVars/New.md)
+- [Set](IRNWhitelist_CVars/Set.md)
+- [Toggle](IRNWhitelist_CVars/Toggle.md)
+
+## [IRNWhitelist.Files](IRNWhitelist_Files/index.md)
+- [AppendLine](IRNWhitelist_Files/AppendLine.md)
+- [Create](IRNWhitelist_Files/Create.md)
+- [Exists](IRNWhitelist_Files/Exists.md)
+- [LineExists](IRNWhitelist_Files/LineExists.md)
+- [Load](IRNWhitelist_Files/Load.md)
+- [ReadJSON](IRNWhitelist_Files/ReadJSON.md)
+- [ReadLines](IRNWhitelist_Files/ReadLines.md)
+- [ReadRAW](IRNWhitelist_Files/ReadRAW.md)
+- [RemoveDuplicateLines](IRNWhitelist_Files/RemoveDuplicateLines.md)
+- [RemoveLine](IRNWhitelist_Files/RemoveLine.md)
+- [ReplaceLine](IRNWhitelist_Files/ReplaceLine.md)
+- [WriteJSON](IRNWhitelist_Files/WriteJSON.md)
+- [WriteLines](IRNWhitelist_Files/WriteLines.md)
+- [WriteRAW](IRNWhitelist_Files/WriteRAW.md)
+
+## [IRNWhitelist.Lang](IRNWhitelist_Lang/index.md)
+- [GetLanguages](IRNWhitelist_Lang/GetLanguages.md)
+- [GetPhrases](IRNWhitelist_Lang/GetPhrases.md)
+- [FormatPhrase](IRNWhitelist_Lang/FormatPhrase.md)
+- [FormatString](IRNWhitelist_Lang/FormatString.md)
+- [GetName](IRNWhitelist_Lang/GetName.md)
+- [GetNow](IRNWhitelist_Lang/GetNow.md)
+- [GetNowName](IRNWhitelist_Lang/GetNowName.md)
+- [GetPhrase](IRNWhitelist_Lang/GetPhrase.md)
+- [Has](IRNWhitelist_Lang/Has.md)
+- [Load](IRNWhitelist_Lang/Load.md)
+- [Set](IRNWhitelist_Lang/Set.md)
+
+## [IRNWhitelist.Players](IRNWhitelist_Players/index.md)
+- [GetByNickname](IRNWhitelist_Players/GetByNickname.md)
+- [IsValidSteamID](IRNWhitelist_Players/IsValidSteamID.md)
+- [IsValidSteamID64](IRNWhitelist_Players/IsValidSteamID64.md)
+- [FromAny](IRNWhitelist_Players/FromAny.md)
+- [GetNickname](IRNWhitelist_Players/GetNickname.md)
+- [Load](IRNWhitelist_Players/Load.md)
+- [SetNickname](IRNWhitelist_Players/SetNickname.md)
+
+## [IRNWhitelist.Settings](IRNWhitelist_Settings/index.md)
+- [Read](IRNWhitelist_Settings/Read.md)
+- [Apply](IRNWhitelist_Settings/Apply.md)
+- [Collect](IRNWhitelist_Settings/Collect.md)
+- [Exists](IRNWhitelist_Settings/Exists.md)
+- [Load](IRNWhitelist_Settings/Load.md)
+- [Save](IRNWhitelist_Settings/Save.md)
+- [Set](IRNWhitelist_Settings/Set.md)
+- [Write](IRNWhitelist_Settings/Write.md)
+
+## [IRNWhitelist.Utils](IRNWhitelist_Utils/index.md)
+- [FormatString](IRNWhitelist_Utils/FormatString.md)
+- [GeneratePIN](IRNWhitelist_Utils/GeneratePIN.md)
+- [GmatchToTable](IRNWhitelist_Utils/GmatchToTable.md)
+- [Int2Bool](IRNWhitelist_Utils/Int2Bool.md)
+- [Log](IRNWhitelist_Utils/Log.md)
+- [Module](IRNWhitelist_Utils/Module.md)
+- [ParseIP](IRNWhitelist_Utils/ParseIP.md)
+- [PrintPlayerName](IRNWhitelist_Utils/PrintPlayerName.md)
+- [SetServerPassword](IRNWhitelist_Utils/SetServerPassword.md)
+- [TableClearDoubles](IRNWhitelist_Utils/TableClearDoubles.md)
+
+## [IRNWhitelist.Whitelist](IRNWhitelist_Whitelist/index.md)
+- [IsPasswordProtected](IRNWhitelist_Whitelist/IsPasswordProtected.md)
+- [Clear](IRNWhitelist_Whitelist/Clear.md)
+- [ClearDuplicates](IRNWhitelist_Whitelist/ClearDuplicates.md)
+- [FormatReason](IRNWhitelist_Whitelist/FormatReason.md)
+- [GetPlayers](IRNWhitelist_Whitelist/GetPlayers.md)
+- [IsOn](IRNWhitelist_Whitelist/IsOn.md)
+- [IsPlayerWhitelisted](IRNWhitelist_Whitelist/IsPlayerWhitelisted.md)
+- [NeedPassword](IRNWhitelist_Whitelist/NeedPassword.md)
+- [SetNeedPassword](IRNWhitelist_Whitelist/SetNeedPassword.md)
+- [SetOn](IRNWhitelist_Whitelist/SetOn.md)
+- [AddPlayer](IRNWhitelist_Whitelist/AddPlayer.md)
+- [GetPlayer](IRNWhitelist_Whitelist/GetPlayer.md)
+- [Load](IRNWhitelist_Whitelist/Load.md)
+- [PlayersCount](IRNWhitelist_Whitelist/PlayersCount.md)
+- [RemovePlayer](IRNWhitelist_Whitelist/RemovePlayer.md)
+- [RemovePlayerOnce](IRNWhitelist_Whitelist/RemovePlayerOnce.md)
+- [SetPlayers](IRNWhitelist_Whitelist/SetPlayers.md)
