@@ -22,7 +22,7 @@ English version of this file you can read [here](https://github.com/Enalian/simp
 | `whitelist_status` | *Нет* | Посмотреть состояние (настройки) белого списка. |
 | `whitelist_add` | `<SteamID(64)/AccountID/Никнейм> [Единоразово?]` | Добавить игрока в белый список. |
 | `whitelist_remove` | `<SteamID(64)/AccountID/Никнейм>` | Удалить игрока из белого списка. |
-| `whitelist_set <SteamID(64)/AccountID/Никнейм> [Единоразово?]` | Очистить белый список и добавить в него игрока. |
+| `whitelist_set` | ` <SteamID(64)/AccountID/Никнейм> [Единоразово?]` | Очистить белый список и добавить в него игрока. |
 | `whitelist_clear` | *Нет* | Очистить белый список. |
 | `whitelist_clear_duplicates` | *Нет* | Очистить белый список от дублирующийся игроков. |
 | `whitelist_players` | *Нет* | Посмотреть список игроков в белом списке. |

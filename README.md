@@ -22,7 +22,7 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 | `whitelist_status` | *No arguments* | Check whitelist state and settings. |
 | `whitelist_add` | `<SteamID(64)/AccountID/Nickname> [Once?]` | Add player to the whitelist. |
 | `whitelist_remove` | `<SteamID(64)/AccountID/Nickname>` | Remove player from the whitelist. |
-| `whitelist_set <SteamID(64)/AccountID/Nickname> [Once?]` | Clear whitelist and add player to it. |
+| `whitelist_set` | `<SteamID(64)/AccountID/Nickname> [Once?]` | Clear whitelist and add player to it. |
 | `whitelist_clear` | *No arguments* | Clear whitelist. |
 | `whitelist_clear_duplicates` | *No arguments* | Remove duplicated players from the whitelist. |
 | `whitelist_players` | *No arguments* | Посмотреть список игроков в белом списке. |
