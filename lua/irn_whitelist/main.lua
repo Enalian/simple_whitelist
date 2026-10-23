@@ -1,3 +1,3 @@
 IRNWhitelist = IRNWhitelist or {
-	VERSION = 101726, -- ММДДГГ.ПАТЧ
+	VERSION = 102326, -- ММДДГГ.ПАТЧ
 }
