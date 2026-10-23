@@ -280,10 +280,10 @@ function IRNWhitelist.Whitelist:Load()
 				return false, self.FormatReason(steamid64, ipAddress, name)
 			end
 
-			if self.NeedPassword() and svPassword ~= clPassword then
+			if not IRNWhitelist.IPasswords:Check(steamid64, clPassword) then
 				return false, "#GameUI_ServerRejectBadPassword"
 			end
-			if not IRNWhitelist.IPasswords:Check(steamid64, clPassword) then
+			if self.NeedPassword() and svPassword ~= clPassword then
 				return false, "#GameUI_ServerRejectBadPassword"
 			end
 
