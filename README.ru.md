@@ -38,6 +38,7 @@ English version of this file you can read [here](https://github.com/Enalian/simp
 | `whitelist_logs` | `<1/0>` | Включить логирование сообщений и действий? (1 = Да, 0 = Нет) |
 | `whitelist_language` | `<Язык>` | Установить язык сервера. |
 | `whitelist_ipasswords_enable` | `<1/0>` | Включить модуль индивидуальных паролей. |
+| `whitelist_ipasswords_pepper` | `<Текст>` | Установить новый перец для индивидуальных паролей. |
 | `whitelist_ipassword_set` | `<SteamID(64)/AccountID/Никнейм> <Пароль>` | Установить игроку индивидуальный пароль для входа на сервер. |
 | `whitelist_ipassword_remove` | `<SteamID(64)/AccountID/Никнейм>` | Убрать индивидуальный пароль для игрока. |
 

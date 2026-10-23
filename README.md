@@ -38,6 +38,7 @@ Installing **Mantle** is not mandatory; without it, the menu will not work, but 
 | `whitelist_logs` | `<1/0>` | Enable all messages and actions log? (1 = Yes, 0 = No) |
 | `whitelist_language` | `<Language>` | Set server language. |
 | `whitelist_ipasswords_enable` | `<1/0>` | Enable individual passwords module. |
+| `whitelist_ipasswords_pepper` | `<Pepper>` | Set new pepper for individual passwords. |
 | `whitelist_ipassword_set` | `<SteamID(64)/AccountID/Nickname> <Password>` | Set player individual password to join the server. |
 | `whitelist_ipassword_remove` | `<SteamID(64)/AccountID/Nickname>` | Remove player individual password. |
 
