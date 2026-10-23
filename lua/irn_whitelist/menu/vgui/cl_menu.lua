@@ -80,12 +80,13 @@ function PANEL:SettingsBlock(update)
 		self.Settings.KickReasonString:SetValue(self.Data.Settings.kick_reason or "")
 		self.Settings.DateFormatString:SetValue(self.Data.Settings.date_format or "")
 		self.Settings.TimeFormatString:SetValue(self.Data.Settings.time_format or "")
-		self.Settings.PasswordCheckBool:SetValue(self.Settings.SaveSettingsBool.password_check)
-		self.Settings.KickPlayersBool:SetValue(self.Settings.SaveSettingsBool.kick_players)
-		self.Settings.KickBotsBool:SetValue(self.Settings.SaveSettingsBool.kick_bots)
-		self.Settings.EnableLogsBool:SetValue(self.Settings.SaveSettingsBool.enable_logs)
-		self.Settings.SaveNamesBool:SetValue(self.Settings.SaveSettingsBool.save_names)
-		self.Settings.SaveSettingsBool:SetValue(self.Settings.SaveSettingsBool.save_settings)
+		self.Settings.PasswordCheckBool:SetValue(self.Data.Settings.password_check)
+		self.Settings.KickPlayersBool:SetValue(self.Data.Settings.kick_players)
+		self.Settings.KickBotsBool:SetValue(self.Data.Settings.kick_bots)
+		self.Settings.EnableLogsBool:SetValue(self.Data.Settings.enable_logs)
+		self.Settings.SaveNamesBool:SetValue(self.Data.Settings.save_names)
+		self.Settings.SaveSettingsBool:SetValue(self.Data.Settings.save_settings)
+		self.Settings.IPasswordsBool:SetValue(self.Data.Settings.ipasswords_enable)
 
 		return
 	end
@@ -220,6 +221,7 @@ function PANEL:SettingsBlock(update)
 			enable_logs = self.Settings.EnableLogsBool:GetValue(),
 			save_names = self.Settings.SaveNamesBool:GetValue(),
 			save_settings = self.Settings.SaveSettingsBool:GetValue(),
+			ipasswords_enable = self.Settings.IPasswordsBool:GetValue(),
 		}
 
 		if not data.language or #data.language < 1 then
@@ -308,6 +310,7 @@ function PANEL:PlayersBlock(update)
 			net.WriteString(pl:SteamID64())
 			net.WriteBool(false)
 			net.SendToServer()
+			self:Close()
 		end)
 	end
 
@@ -321,6 +324,7 @@ function PANEL:PlayersBlock(update)
 			net.WriteString(sid64:lower():Replace(",y", ""):Replace(", y", ""))
 			net.WriteBool(sid64:EndsWith(",y") or sid64:EndsWith(", y"))
 			net.SendToServer()
+			self:Close()
 		end)
 	end
 
@@ -348,6 +352,7 @@ function PANEL:PlayersBlock(update)
 				net.WriteString("del_player")
 				net.WriteString(row[2])
 				net.SendToServer()
+				self:Close()
 			end, "icon16/delete.png")
 
 			dm:AddOption(T("menu.player_set_ipassword"), function()
