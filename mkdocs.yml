@@ -221,20 +221,9 @@ plugins:
       lang:
         - ru
         - en
-  - awesome-pages
   - git-revision-date-localized:
       enable_creation_date: true
       type: date
-
-# Блок соцсетей в подвале (Footer)
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Enalian
-      name: Исходный код на GitHub
-    - icon: fontawesome/brands/discord
-      link: https://discord.gg/gRc4UcXwTY
-      name: Наш сервер в Discord
 
 # Расширения Markdown (Табы, Спойлеры, Блоки кода)
 markdown_extensions:

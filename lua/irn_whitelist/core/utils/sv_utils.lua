@@ -1,4 +1,5 @@
 IRNWhitelist.Utils = {}
+local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 --- Load whitelist module
 ---@param name string Module filename (without .lua and sv_)
