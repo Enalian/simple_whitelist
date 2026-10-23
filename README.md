@@ -6,8 +6,6 @@ All developer documentation is [here](https://enalian.github.io/simple_whitelist
 
 Installing **Mantle** is not mandatory; without it, the menu will not work, but all other functionality will remain operational.
 
-Clear version without menu at [`core`](https://github.com/Enalian/simple_whitelist/blob/core) branch.
-
 ## 🇷🇺 Русская версия
 
 Русскую версию этого файла вы можете прочитать [здесь](https://github.com/Enalian/simple_whitelist/blob/master/README.ru.md).
@@ -20,9 +18,9 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 | `whitelist_off` | *No arguments* | Disable whitelist. |
 | `whitelist_toggle` | *No arguments* | Toggle (disable or enable) whitelist. |
 | `whitelist_status` | *No arguments* | Check whitelist state and settings. |
-| `whitelist_add` | `<SteamID(64)/AccountID/Nickname> [Once?]` | Add player to the whitelist. |
+| `whitelist_add` | `<SteamID(64)/AccountID/Nickname> [Once? (1/0)]` | Add player to the whitelist. |
 | `whitelist_remove` | `<SteamID(64)/AccountID/Nickname>` | Remove player from the whitelist. |
-| `whitelist_set` | `<SteamID(64)/AccountID/Nickname> [Once?]` | Clear whitelist and add player to it. |
+| `whitelist_set` | `<SteamID(64)/AccountID/Nickname> [Once? (1/0)]` | Clear whitelist and add player to it. |
 | `whitelist_clear` | *No arguments* | Clear whitelist. |
 | `whitelist_clear_duplicates` | *No arguments* | Remove duplicated players from the whitelist. |
 | `whitelist_players` | *No arguments* | Посмотреть список игроков в белом списке. |
@@ -39,6 +37,9 @@ Clear version without menu at [`core`](https://github.com/Enalian/simple_whiteli
 | `whitelist_save_settings` | `<1/0>` | Save all settings into file? (1 = Yes, 0 = No) |
 | `whitelist_logs` | `<1/0>` | Enable all messages and actions log? (1 = Yes, 0 = No) |
 | `whitelist_language` | `<Language>` | Set server language. |
+| `whitelist_ipasswords_enable` | `<1/0>` | Enable individual passwords module. |
+| `whitelist_ipassword_set` | `<SteamID(64)/AccountID/Nickname> <Password>` | Set player individual password to join the server. |
+| `whitelist_ipassword_remove` | `<SteamID(64)/AccountID/Nickname>` | Remove player individual password. |
 
 ## ⚪ Fillers for reason
 
