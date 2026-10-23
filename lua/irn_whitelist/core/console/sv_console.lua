@@ -97,12 +97,7 @@ end
 ---@param no_log? boolean Need to be logged?
 function IRNWhitelist.Console.SuccessRaw(str, no_log)
 	logThisPls(str, "success", { no_log = no_log })
-	MsgC(
-		Color(162, 255, 162),
-		"[SimpleWhitelist] [+] ",
-		color_white,
-		IRNWhitelist.Lang:FormatPhrase(phrase, unpack(args)) .. "\n"
-	)
+	MsgC(Color(162, 255, 162), "[SimpleWhitelist] [+] ", color_white, str .. "\n")
 end
 
 --- Print success message into server console
