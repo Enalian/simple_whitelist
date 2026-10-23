@@ -16,12 +16,13 @@ return {
 		whitelist_settiings_loaded = "Настройки белого списка применены из файла.",
 		whitelist_status = "Белый список сейчас {{1}}.\nЯзык сервера: {{2}}.\n\nВход по паролю сейчас {{3}}.\nПри включении БС игроки и боты {{4}}.\nПри включении БС боты {{5}}.\nЛогирование сообщений сейчас {{6}}.\nСохранение имен игроков в БД сейчас {{7}}.\nСохранение текущих настроек в файл сейчас {{8}}.\n\nПричина кика при входе игрока (если он не в БС): {{9}}.\nПричина кика при включении БС (если игрок не в БС): {{10}}.\n\nФормат времени: {{11}}.\nФормат даты: {{12}}.",
 		whitelist_ipassword_set = "Игроку {{1}} был установлен индивилуальный пароль '****'.",
+		whitelist_ipassword_set_hided = "Его пароль: {{1}}",
 		whitelist_ipassword_removed = "Игроку {{1}} был убран индивилуальный пароль.",
 
 		help_add = "Использование: whitelist_add <SteamID(64)/AccountID/Никнейм> [Единоразово? (1/0)]",
 		help_remove = "Использование: whitelist_remove <SteamID(64)/AccountID/Никнейм>",
 		help_set = "Использование: whitelist_set <SteamID(64)/AccountID/Никнейм> [Единоразово? (1/0)]",
-		help_ipassword_set = "Использование: whitelist_ipassword_set <SteamID(64)/AccountID/Никнейм> <Пароль>",
+		help_ipassword_set = "Использование: whitelist_ipassword_set <SteamID(64)/AccountID/Никнейм> [Пароль]",
 		help_ipassword_remove = "Использование: whitelist_ipassword_remove <SteamID(64)/AccountID/Никнейм>",
 
 		invalid_player = "По заданным критериям ({{1}}) игрок не найден.", -- Критерий поиска (то, что ввел игрок)

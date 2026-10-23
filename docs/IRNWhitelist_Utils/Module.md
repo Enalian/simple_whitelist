@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.Module
 ## Description
 ---
 
-Load whitelist module
+Load whitelist module.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;Module filename (without .lua and sv_)
+&emsp;Module filename (without .lua and sv_).
 
 ## Returns
 ---

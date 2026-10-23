@@ -9,16 +9,16 @@ title: IRNWhitelist.Utils.GmatchToTable
 ## Description
 ---
 
-Insert all string.gmatch values into table
+Insert all string.gmatch values into table.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;The string to search in
+&emsp;The string to search in.
 
 `2` **`string`** **pattern**  
-&emsp;The pattern to search for
+&emsp;The pattern to search for.
 
 ## Returns
 ---

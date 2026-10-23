@@ -9,19 +9,19 @@ title: IRNWhitelist.CVars:Set
 ## Description
 ---
 
-Set ConVar value
+Set ConVar value.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;The ConVar name
+&emsp;The ConVar name.
 
 `2` **`string or number or boolean`** **cv_type**  
-&emsp;The ConVar type
+&emsp;The ConVar type.
 
 `3` **`string or number or boolean?`** **value** *(optional)*  
-&emsp;New ConVar value
+&emsp;New ConVar value.
 
 ## Returns
 ---

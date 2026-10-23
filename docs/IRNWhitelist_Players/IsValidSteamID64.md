@@ -9,13 +9,13 @@ title: IRNWhitelist.Players.IsValidSteamID64
 ## Description
 ---
 
-Check if SteamID64 valid
+Check if SteamID64 valid.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Input SteamID64
+&emsp;Input SteamID64.
 
 ## Returns
 ---

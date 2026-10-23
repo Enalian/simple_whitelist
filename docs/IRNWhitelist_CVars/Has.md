@@ -9,13 +9,13 @@ title: IRNWhitelist.CVars:Has
 ## Description
 ---
 
-Check if ConVar exists
+Check if ConVar exists.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;The ConVar name
+&emsp;The ConVar name.
 
 ## Returns
 ---

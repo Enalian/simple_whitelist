@@ -3,22 +3,28 @@ title: IRNWhitelist.Players:SetNickname
 ---
 
 ```lua
-🟦 IRNWhitelist.Players:SetNickname(string steamid64, string name)
+🟦 boolean IRNWhitelist.Players:SetNickname(string steamid64, string name)
 ```
 
 ## Description
 ---
 
-Set player nickname (for database)
+Set player nickname (for database).
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player SteamID64
+&emsp;Player SteamID64.
 
 `2` **`string`** **name**  
-&emsp;Player nickname
+&emsp;Player nickname.
+
+## Returns
+---
+
+`1` **`boolean`**  
+&emsp;Return value.
 
 ## Example
 ---

@@ -9,7 +9,7 @@ title: IRNWhitelist.CVars:Collect
 ## Description
 ---
 
-Collect all ConVars values
+Collect all ConVars values.
 
 ## Arguments
 ---

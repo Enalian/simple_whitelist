@@ -9,13 +9,13 @@ title: IRNWhitelist.Settings:Write
 ## Description
 ---
 
-Write new settings to file
+Write new settings to file.
 
 ## Arguments
 ---
 
 `1` **`table`** **settings**  
-&emsp;New settings
+&emsp;New settings.
 
 ## Returns
 ---

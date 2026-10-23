@@ -9,19 +9,19 @@ title: IRNWhitelist.Lang:GetPhrase
 ## Description
 ---
 
-Get language phrase
+Get language phrase.
 
 ## Arguments
 ---
 
 `1` **`string`** **phrase**  
-&emsp;Input phrase
+&emsp;Input phrase.
 
 `2` **`string?`** **lang** *(optional)*  
-&emsp;Phrase language
+&emsp;Phrase language.
 
 `3` **`boolean?`** **no_warn** *(optional)*  
-&emsp;Ignore warnings
+&emsp;Ignore warnings.
 
 ## Returns
 ---

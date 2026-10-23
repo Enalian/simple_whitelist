@@ -70,7 +70,7 @@ function IRNWhitelist.Players:SetNickname(steamid64, name)
 		)
 	)
 
-	hook.Run("IRNWhitelistPlayerNicknameSet", steamid64, name)
+	hook.Run("IRNWhitelistPlayerNicknameSet", steamid64, name) -- Calls when player nickname has been set
 	return true
 end
 

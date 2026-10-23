@@ -9,7 +9,7 @@ title: IRNWhitelist.Settings:Collect
 ## Description
 ---
 
-Collect all settings into table (key = parameter name, value = parameter value)
+Collect all settings into table (key = parameter name, value = parameter value).
 
 ## Arguments
 ---
@@ -26,6 +26,5 @@ Collect all settings into table (key = parameter name, value = parameter value)
 ---
 
 ```lua
-local data = IRNWhitelist.Settings:Collect()
-print(data)
+Settings = IRNWhitelist.Settings:Collect(),
 ```

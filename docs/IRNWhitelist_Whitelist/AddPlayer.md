@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist:AddPlayer
 ## Description
 ---
 
-Add player to the whitelist
+Add player to the whitelist.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player's SteamID64
+&emsp;Player's SteamID64.
 
 `2` **`boolean?`** **once** *(optional)*  
 &emsp;Add player once?

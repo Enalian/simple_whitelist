@@ -9,13 +9,13 @@ title: IRNWhitelist.Lang:Set
 ## Description
 ---
 
-Change current language
+Change current language.
 
 ## Arguments
 ---
 
 `1` **`string`** **new_lang**  
-&emsp;New language
+&emsp;New language.
 
 ## Returns
 ---

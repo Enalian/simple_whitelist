@@ -9,16 +9,16 @@ title: IRNWhitelist.Files:Create
 ## Description
 ---
 
-Create new file
+Create new file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **ctx**  
-&emsp;File content
+&emsp;File content.
 
 ## Returns
 ---

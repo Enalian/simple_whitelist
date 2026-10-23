@@ -9,16 +9,16 @@ title: IRNWhitelist:GetPhrase
 ## Description
 ---
 
-Get language phrase
+Get language phrase.
 
 ## Arguments
 ---
 
 `1` **`string`** **phrase**  
-&emsp;Phrase
+&emsp;Phrase.
 
 `2` **`any`** **...**  
-&emsp;Format strings
+&emsp;Format strings.
 
 ## Returns
 ---

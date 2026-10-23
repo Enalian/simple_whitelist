@@ -9,16 +9,16 @@ title: IRNWhitelist.Lang.GetPhrases
 ## Description
 ---
 
-Get language phrases
+Get language phrases.
 
 ## Arguments
 ---
 
 `1` **`string`** **lang**  
-&emsp;Phrases language
+&emsp;Phrases language.
 
 `2` **`boolean?`** **no_warn** *(optional)*  
-&emsp;Ignore warnings
+&emsp;Ignore warnings.
 
 ## Returns
 ---

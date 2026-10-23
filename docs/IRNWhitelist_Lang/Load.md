@@ -9,7 +9,7 @@ title: IRNWhitelist.Lang:Load
 ## Description
 ---
 
-Main load module function
+Main load module function.
 
 ## Arguments
 ---

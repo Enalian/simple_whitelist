@@ -9,7 +9,7 @@ title: IRNWhitelist.Settings:Exists
 ## Description
 ---
 
-Check if file and all parameters exists
+Check if file and all parameters exists.
 
 ## Arguments
 ---

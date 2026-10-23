@@ -2,7 +2,7 @@ IRNWhitelist.Commands = {}
 
 --- Register new command
 ---@param name string New command name
----@param do_func function OnExecute function
+---@param do_func fun(args?: string[]) OnExecute function
 ---@param desc? string Command description
 function IRNWhitelist.Commands.New(name, do_func, desc)
 	if not isstring(name) or not isfunction(do_func) then
@@ -263,10 +263,14 @@ function IRNWhitelist.Commands:Load()
 			IRNWhitelist.Console:Error("commands.not_in_whitelist", name)
 			return
 		end
-		IRNWhitelist.IPasswords:SetPassword(steamid, args[2])
 
+		local _, passwd = IRNWhitelist.IPasswords:SetPassword(steamid, args[2])
 		local print_name = IRNWhitelist.Utils.PrintPlayerName(name, steamid)
+
 		IRNWhitelist.Console:Success("commands.whitelist_ipassword_set", print_name)
+		if passwd ~= args[2] then
+			IRNWhitelist.Console:Info("commands.whitelist_ipassword_set_hided", passwd)
+		end
 	end, "Set individual password for player")
 
 	self.New("ipassword_remove", function(args)

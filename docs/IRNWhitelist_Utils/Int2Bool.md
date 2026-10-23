@@ -9,16 +9,16 @@ title: IRNWhitelist.Utils.Int2Bool
 ## Description
 ---
 
-Translate number (integer) to bool value
+Translate number (integer) to bool value.
 
 ## Arguments
 ---
 
 `1` **`number`** **int**  
-&emsp;The number to convert
+&emsp;The number to convert.
 
 `2` **`boolean?`** **rev** *(optional)*  
-&emsp;Reverse output (1 = false, 0 = true)
+&emsp;Reverse output (1 = false, 0 = true).
 
 ## Returns
 ---

@@ -9,16 +9,16 @@ title: IRNWhitelist.Lang:FormatPhrase
 ## Description
 ---
 
-Format phrase by strings
+Format phrase by strings.
 
 ## Arguments
 ---
 
 `1` **`string`** **phrase**  
-&emsp;Input phrase
+&emsp;Input phrase.
 
 `2` **`any`** **...**  
-&emsp;Format strings
+&emsp;Format strings.
 
 ## Returns
 ---

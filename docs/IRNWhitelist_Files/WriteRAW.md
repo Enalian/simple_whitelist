@@ -9,16 +9,16 @@ title: IRNWhitelist.Files:WriteRAW
 ## Description
 ---
 
-Write RAW data to file
+Write RAW data to file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **ctx**  
-&emsp;File data
+&emsp;File data.
 
 ## Returns
 ---

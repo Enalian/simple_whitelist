@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist.SetOn
 ## Description
 ---
 
-Change whitelist state (enable or disable)
+Change whitelist state (enable or disable).
 
 ## Arguments
 ---
 
 `1` **`boolean`** **bool**  
-&emsp;New state (true = enable, false = disable)
+&emsp;New state (true = enable, false = disable).
 
 ## Example
 ---

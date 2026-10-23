@@ -7,6 +7,36 @@ repo_url: https://github.com/Enalian/simple_whitelist
 
 nav:
   - Home: index.md
+  - Hooks:
+    - Hooks/index.md
+    - IRNWhitelistCleared: Hooks/IRNWhitelistCleared.md
+    - IRNWhitelistDateFormatChanged: Hooks/IRNWhitelistDateFormatChanged.md
+    - IRNWhitelistDuplicatesCleared: Hooks/IRNWhitelistDuplicatesCleared.md
+    - IRNWhitelistEnabled: Hooks/IRNWhitelistEnabled.md
+    - IRNWhitelistIPasswordRemove: Hooks/IRNWhitelistIPasswordRemove.md
+    - IRNWhitelistIPasswordSet: Hooks/IRNWhitelistIPasswordSet.md
+    - IRNWhitelistIPasswordsModuleEnabled: Hooks/IRNWhitelistIPasswordsModuleEnabled.md
+    - IRNWhitelistIPasswordsRemovedAll: Hooks/IRNWhitelistIPasswordsRemovedAll.md
+    - IRNWhitelistJoinKickReasonChanged: Hooks/IRNWhitelistJoinKickReasonChanged.md
+    - IRNWhitelistKickBotsEnabled: Hooks/IRNWhitelistKickBotsEnabled.md
+    - IRNWhitelistKickPlayersAndBotsEnabled: Hooks/IRNWhitelistKickPlayersAndBotsEnabled.md
+    - IRNWhitelistKickReasonChanged: Hooks/IRNWhitelistKickReasonChanged.md
+    - IRNWhitelistLanguageChanged: Hooks/IRNWhitelistLanguageChanged.md
+    - IRNWhitelistLogsEnabled: Hooks/IRNWhitelistLogsEnabled.md
+    - IRNWhitelistPasswordCheckEnabled: Hooks/IRNWhitelistPasswordCheckEnabled.md
+    - IRNWhitelistPlayerAdded: Hooks/IRNWhitelistPlayerAdded.md
+    - IRNWhitelistPlayerNicknameSet: Hooks/IRNWhitelistPlayerNicknameSet.md
+    - IRNWhitelistPlayerRemoved: Hooks/IRNWhitelistPlayerRemoved.md
+    - IRNWhitelistPlayerRemovedOnce: Hooks/IRNWhitelistPlayerRemovedOnce.md
+    - IRNWhitelistPlayersSetted: Hooks/IRNWhitelistPlayersSetted.md
+    - IRNWhitelistSaveNamesEnabled: Hooks/IRNWhitelistSaveNamesEnabled.md
+    - IRNWhitelistSaveSettingsEnabled: Hooks/IRNWhitelistSaveSettingsEnabled.md
+    - IRNWhitelistServerPepperChanged: Hooks/IRNWhitelistServerPepperChanged.md
+    - IRNWhitelistSettingsApplied: Hooks/IRNWhitelistSettingsApplied.md
+    - IRNWhitelistSettingsParamSet: Hooks/IRNWhitelistSettingsParamSet.md
+    - IRNWhitelistSettingsSaved: Hooks/IRNWhitelistSettingsSaved.md
+    - IRNWhitelistSettingsWrited: Hooks/IRNWhitelistSettingsWrited.md
+    - IRNWhitelistTimeFormatChanged: Hooks/IRNWhitelistTimeFormatChanged.md
   - IRNWhitelist:
     - IRNWhitelist/index.md
     - ApplySettings: IRNWhitelist/ApplySettings.md
@@ -65,6 +95,25 @@ nav:
     - WriteJSON: IRNWhitelist_Files/WriteJSON.md
     - WriteLines: IRNWhitelist_Files/WriteLines.md
     - WriteRAW: IRNWhitelist_Files/WriteRAW.md
+  - IRNWhitelist.IPasswords:
+    - IRNWhitelist_IPasswords/index.md
+    - Disable: IRNWhitelist_IPasswords/Disable.md
+    - Enable: IRNWhitelist_IPasswords/Enable.md
+    - GetPepper: IRNWhitelist_IPasswords/GetPepper.md
+    - IsEnabled: IRNWhitelist_IPasswords/IsEnabled.md
+    - SetPepper: IRNWhitelist_IPasswords/SetPepper.md
+    - Toggle: IRNWhitelist_IPasswords/Toggle.md
+    - Check: IRNWhitelist_IPasswords/Check.md
+    - GenPasswordHash: IRNWhitelist_IPasswords/GenPasswordHash.md
+    - GetPasswordHash: IRNWhitelist_IPasswords/GetPasswordHash.md
+    - GetPasswordHashSalt: IRNWhitelist_IPasswords/GetPasswordHashSalt.md
+    - GetPasswordSalt: IRNWhitelist_IPasswords/GetPasswordSalt.md
+    - HasPassword: IRNWhitelist_IPasswords/HasPassword.md
+    - Load: IRNWhitelist_IPasswords/Load.md
+    - PasswordsMatch: IRNWhitelist_IPasswords/PasswordsMatch.md
+    - RemoveAllPasswords: IRNWhitelist_IPasswords/RemoveAllPasswords.md
+    - RemovePassword: IRNWhitelist_IPasswords/RemovePassword.md
+    - SetPassword: IRNWhitelist_IPasswords/SetPassword.md
   - IRNWhitelist.Lang:
     - IRNWhitelist_Lang/index.md
     - GetLanguages: IRNWhitelist_Lang/GetLanguages.md
@@ -101,11 +150,14 @@ nav:
     - IRNWhitelist_Utils/index.md
     - FormatString: IRNWhitelist_Utils/FormatString.md
     - GeneratePIN: IRNWhitelist_Utils/GeneratePIN.md
+    - GenPasswordHash: IRNWhitelist_Utils/GenPasswordHash.md
+    - GenPasswordSaltPepper: IRNWhitelist_Utils/GenPasswordSaltPepper.md
     - GmatchToTable: IRNWhitelist_Utils/GmatchToTable.md
     - Int2Bool: IRNWhitelist_Utils/Int2Bool.md
     - Log: IRNWhitelist_Utils/Log.md
     - Module: IRNWhitelist_Utils/Module.md
     - ParseIP: IRNWhitelist_Utils/ParseIP.md
+    - PasswordsMatch: IRNWhitelist_Utils/PasswordsMatch.md
     - PrintPlayerName: IRNWhitelist_Utils/PrintPlayerName.md
     - SetServerPassword: IRNWhitelist_Utils/SetServerPassword.md
     - TableClearDoubles: IRNWhitelist_Utils/TableClearDoubles.md
@@ -128,6 +180,12 @@ nav:
     - RemovePlayer: IRNWhitelist_Whitelist/RemovePlayer.md
     - RemovePlayerOnce: IRNWhitelist_Whitelist/RemovePlayerOnce.md
     - SetPlayers: IRNWhitelist_Whitelist/SetPlayers.md
+  - net:
+    - net/index.md
+    - ReadCompressedString: net/ReadCompressedString.md
+    - ReadCompressedTable: net/ReadCompressedTable.md
+    - WriteCompressedString: net/WriteCompressedString.md
+    - WriteCompressedTable: net/WriteCompressedTable.md
 
 theme:
   name: material

@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.TableClearDoubles
 ## Description
 ---
 
-Clear sequential table from double values
+Clear sequential table from double values.
 
 ## Arguments
 ---
 
 `1` **`any[]`** **tbl**  
-&emsp;Table to clear doubles in
+&emsp;Table to clear doubles in.
 
 ## Returns
 ---

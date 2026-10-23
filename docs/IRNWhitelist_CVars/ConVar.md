@@ -3,24 +3,24 @@ title: IRNWhitelist.CVars:ConVar
 ---
 
 ```lua
-🟦 ConVar|nil IRNWhitelist.CVars:ConVar(string name)
+🟦 ConVar or nil IRNWhitelist.CVars:ConVar(string name)
 ```
 
 ## Description
 ---
 
-Get raw ConVar type
+Get raw ConVar type.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;The ConVar name
+&emsp;The ConVar name.
 
 ## Returns
 ---
 
-`1` **`ConVar|nil`**  
+`1` **`ConVar or nil`**  
 &emsp;Return value.
 
 ## Example

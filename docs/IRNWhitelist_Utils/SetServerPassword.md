@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.SetServerPassword
 ## Description
 ---
 
-Set or reset server password (for reset - 'password' = nil or 'password' = "")
+Set or reset server password (for reset - 'password' = nil or 'password' = "").
 
 ## Arguments
 ---
 
 `1` **`string?`** **password** *(optional)*  
-&emsp;The new server password
+&emsp;The new server password.
 
 ## Example
 ---

@@ -9,7 +9,7 @@ title: IRNWhitelist:GetLanguages
 ## Description
 ---
 
-Get addon languages
+Get addon languages.
 
 ## Arguments
 ---

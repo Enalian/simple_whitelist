@@ -9,13 +9,13 @@ title: IRNWhitelist.Files:Exists
 ## Description
 ---
 
-Check if file exists
+Check if file exists.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 ## Returns
 ---

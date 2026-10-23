@@ -9,7 +9,7 @@ title: IRNWhitelist.Settings:Apply
 ## Description
 ---
 
-Apply settings
+Apply settings.
 
 ## Arguments
 ---

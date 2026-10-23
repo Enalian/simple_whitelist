@@ -9,13 +9,13 @@ title: IRNWhitelist.Console.InfoRaw
 ## Description
 ---
 
-Print raw information text into client console
+Print raw information text into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Text to print
+&emsp;Text to print.
 
 ## Example
 ---

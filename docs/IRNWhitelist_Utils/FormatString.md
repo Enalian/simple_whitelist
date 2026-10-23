@@ -9,19 +9,19 @@ title: IRNWhitelist.Utils.FormatString
 ## Description
 ---
 
-Format string with table (Relace all 'fmt' strings from key-values into 'tbl')
+Format string with table (Relace all 'fmt' strings from key-values into 'tbl').
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;String to format
+&emsp;String to format.
 
 `2` **`string?`** **fmt** *(optional)*  
-&emsp;Format string
+&emsp;Format string.
 
 `3` **`string[]`** **tbl**  
-&emsp;String formats
+&emsp;String formats.
 
 ## Returns
 ---

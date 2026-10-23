@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist:SetPlayers
 ## Description
 ---
 
-Replace all whitelisted players to provided players
+Replace all whitelisted players to provided players.
 
 ## Arguments
 ---
 
 `1` **`table`** **players**  
-&emsp;Players table (key = Player SteamID64, value = once? or SteamID64[])
+&emsp;Players table (key = Player SteamID64, value = once? or SteamID64[]).
 
 ## Example
 ---

@@ -9,13 +9,13 @@ title: IRNWhitelist.Files:ReadRAW
 ## Description
 ---
 
-Read RAW file content
+Read RAW file content.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 ## Returns
 ---

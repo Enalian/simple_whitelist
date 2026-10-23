@@ -9,16 +9,16 @@ title: IRNWhitelist.Lang:FormatString
 ## Description
 ---
 
-Format string with vararg inputs
+Format string with vararg inputs.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Input string
+&emsp;Input string.
 
 `2` **`any`** **...**  
-&emsp;Format strings
+&emsp;Format strings.
 
 ## Returns
 ---

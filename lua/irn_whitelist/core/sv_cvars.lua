@@ -9,7 +9,7 @@ IRNWhitelist.CVars = {
 ---@param helptext? string Help text of new ConVar
 ---@param min? number Minimum value of new ConVar
 ---@param max? number Maximum value of new ConVar
----@param on_change? function OnChange function
+---@param on_change? fun(oldValue: string, newValue: string) OnChange function
 ---@return ConVar|nil
 function IRNWhitelist.CVars:New(name, default, flags, helptext, min, max, on_change)
 	if not isstring(name) then
@@ -258,7 +258,7 @@ function IRNWhitelist.CVars:Load()
 		end
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistEnabled", newValue)
+			hook.Run("IRNWhitelistEnabled", newValue) -- Calls when ConVar 'whitelist_enable' has been changed
 		end
 	end)
 
@@ -273,7 +273,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("joinkick_reason", newValue)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistJoinKickReasonChanged", newValue)
+				hook.Run("IRNWhitelistJoinKickReasonChanged", newValue) -- Calls when ConVar 'whitelist_joinkick_reason' has been changed
 			end
 		end
 	)
@@ -283,7 +283,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("password_check", nv)
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistPasswordCheckEnabled", nv)
+			hook.Run("IRNWhitelistPasswordCheckEnabled", nv) -- Calls when ConVar 'whitelist_password_check' has been changed
 		end
 	end)
 
@@ -292,7 +292,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("kick", nv)
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistKickPlayersAndBotsEnabled", nv)
+			hook.Run("IRNWhitelistKickPlayersAndBotsEnabled", nv) -- Calls when ConVar 'whitelist_kick' has been changed
 		end
 	end)
 
@@ -301,7 +301,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("kick_bots", nv)
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistKickBotsEnabled", nv)
+			hook.Run("IRNWhitelistKickBotsEnabled", nv) -- Calls when ConVar 'whitelist_kick_bots' has been changed
 		end
 	end)
 
@@ -316,7 +316,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("kick_reason", newValue)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistKickReasonChanged", newValue)
+				hook.Run("IRNWhitelistKickReasonChanged", newValue) -- Calls when ConVar 'whitelist_kick_reason' has been changed
 			end
 		end
 	)
@@ -332,7 +332,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("date_format", newValue)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistDateFormatChanged", newValue)
+				hook.Run("IRNWhitelistDateFormatChanged", newValue) -- Calls when ConVar 'whitelist_date_format' has been changed
 			end
 		end
 	)
@@ -348,7 +348,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("time_format", newValue)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistTimeFormatChanged", newValue)
+				hook.Run("IRNWhitelistTimeFormatChanged", newValue) -- Calls when ConVar 'whitelist_time_format' has been changed
 			end
 		end
 	)
@@ -358,7 +358,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("logs", nv)
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistLogsEnabled", nv)
+			hook.Run("IRNWhitelistLogsEnabled", nv) -- Calls when ConVar 'whitelist_logs' has been changed
 		end
 	end)
 
@@ -367,7 +367,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Settings:Set("save_names", nv)
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistSaveNamesEnabled", nv)
+			hook.Run("IRNWhitelistSaveNamesEnabled", nv) -- Calls when ConVar 'whitelist_save_names' has been changed
 		end
 	end)
 
@@ -383,7 +383,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("save_settings", nv)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistSaveSettingsEnabled", nv)
+				hook.Run("IRNWhitelistSaveSettingsEnabled", nv) -- Calls when ConVar 'whitelist_save_settings' has been changed
 			end
 		end
 	)
@@ -393,7 +393,7 @@ function IRNWhitelist.CVars:Load()
 		IRNWhitelist.Lang:Load()
 
 		if oldValue ~= newValue then
-			hook.Run("IRNWhitelistLanguageChanged", newValue)
+			hook.Run("IRNWhitelistLanguageChanged", newValue) -- Calls when ConVar 'whitelist_language' has been changed
 		end
 	end)
 
@@ -409,7 +409,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("ipasswords_enable", nv)
 
 			if oldValue ~= newValue then
-				hook.Run("IRNWhitelistIPasswordsModuleEnabled", nv)
+				hook.Run("IRNWhitelistIPasswordsModuleEnabled", nv) -- Calls when ConVar 'whitelist_ipasswords_enable' has been changed
 			end
 		end
 	)
@@ -425,7 +425,7 @@ function IRNWhitelist.CVars:Load()
 			IRNWhitelist.Settings:Set("ipasswords_pepper", newValue)
 			if oldValue ~= newValue then
 				IRNWhitelist.IPasswords:RemoveAllPasswords()
-				hook.Run("IRNWhitelistServerPepperChanged", newValue)
+				hook.Run("IRNWhitelistServerPepperChanged", newValue) -- Calls when ConVar 'whitelist_ipasswords_pepper' has been changed
 			end
 		end
 	)

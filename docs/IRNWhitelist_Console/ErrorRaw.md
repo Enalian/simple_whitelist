@@ -9,13 +9,13 @@ title: IRNWhitelist.Console.ErrorRaw
 ## Description
 ---
 
-Print raw error text into client console
+Print raw error text into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Text to print
+&emsp;Text to print.
 
 `2` **`boolean?`** **no_log** *(optional)*  
 &emsp;Need to be logged?

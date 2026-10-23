@@ -9,7 +9,7 @@ title: IRNWhitelist.Settings.Read
 ## Description
 ---
 
-Read settings
+Read settings.
 
 ## Arguments
 ---

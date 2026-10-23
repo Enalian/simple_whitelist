@@ -9,19 +9,19 @@ title: IRNWhitelist.Files:LineExists
 ## Description
 ---
 
-Check if line exists at file
+Check if line exists at file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **ctx**  
-&emsp;Line for check
+&emsp;Line for check.
 
 `3` **`boolean?`** **no_patterns** *(optional)*  
-&emsp;Ignore patterns
+&emsp;Ignore patterns.
 
 ## Returns
 ---

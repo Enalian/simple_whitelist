@@ -9,13 +9,13 @@ title: IRNWhitelist:SetLanguage
 ## Description
 ---
 
-Set new addon language
+Set new addon language.
 
 ## Arguments
 ---
 
 `1` **`string`** **lang**  
-&emsp;New language
+&emsp;New language.
 
 ## Example
 ---

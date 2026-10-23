@@ -9,16 +9,16 @@ title: IRNWhitelist.Files:WriteJSON
 ## Description
 ---
 
-Write JSON data to file
+Write JSON data to file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`table`** **ctx**  
-&emsp;File data
+&emsp;File data.
 
 ## Returns
 ---

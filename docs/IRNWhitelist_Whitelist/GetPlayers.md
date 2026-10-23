@@ -3,13 +3,13 @@ title: IRNWhitelist.Whitelist.GetPlayers
 ---
 
 ```lua
-🟦 table<string, IRNWhitelist.Whitelist.GetPlayers()
+🟦 table<string, boolean> IRNWhitelist.Whitelist.GetPlayers()
 ```
 
 ## Description
 ---
 
-Get all whitelisted players (table: key = Player SteamID64, value = once?)
+Get all whitelisted players (table: key = Player SteamID64, value = once?).
 
 ## Arguments
 ---
@@ -19,12 +19,12 @@ Get all whitelisted players (table: key = Player SteamID64, value = once?)
 ## Returns
 ---
 
-`1` **`table<string,`**  
-&emsp;boolean>
+`1` **`table<string, boolean>`**  
+&emsp;Return value.
 
 ## Example
 ---
 
 ```lua
-return table.Count(IRNWhitelist.Whitelist.GetPlayers())
+for k, v in pairs(IRNWhitelist.Whitelist.GetPlayers()) do
 ```

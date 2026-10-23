@@ -9,16 +9,16 @@ title: IRNWhitelist.Settings:Set
 ## Description
 ---
 
-Change parameter value
+Change parameter value.
 
 ## Arguments
 ---
 
 `1` **`string`** **param**  
-&emsp;Parameter name
+&emsp;Parameter name.
 
 `2` **`string or number or boolean`** **value**  
-&emsp;Parameter value
+&emsp;Parameter value.
 
 ## Returns
 ---

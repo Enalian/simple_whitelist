@@ -9,13 +9,13 @@ title: IRNWhitelist.CVars:Apply
 ## Description
 ---
 
-Apply ConVar values from table
+Apply ConVar values from table.
 
 ## Arguments
 ---
 
 `1` **`table`** **cvrs**  
-&emsp;ConVars table (key = ConVar name, value = ConVar value)
+&emsp;ConVars table (key = ConVar name, value = ConVar value).
 
 ## Returns
 ---
@@ -27,5 +27,5 @@ Apply ConVar values from table
 ---
 
 ```lua
-IRNWhitelist.CVars:Apply()
+IRNWhitelist.CVars:Apply(settings)
 ```

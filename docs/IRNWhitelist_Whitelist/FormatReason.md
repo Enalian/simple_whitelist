@@ -9,19 +9,19 @@ title: IRNWhitelist.Whitelist.FormatReason
 ## Description
 ---
 
-Reason formatter (helper function)
+Reason formatter (helper function).
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player SteamID64
+&emsp;Player SteamID64.
 
 `2` **`string`** **ipAddress**  
-&emsp;Player IPAddress
+&emsp;Player IPAddress.
 
 `3` **`string`** **name**  
-&emsp;Player nickname
+&emsp;Player nickname.
 
 ## Returns
 ---

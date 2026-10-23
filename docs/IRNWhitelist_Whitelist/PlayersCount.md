@@ -9,7 +9,7 @@ title: IRNWhitelist.Whitelist:PlayersCount
 ## Description
 ---
 
-Get count of whitelisted players
+Get count of whitelisted players.
 
 ## Arguments
 ---

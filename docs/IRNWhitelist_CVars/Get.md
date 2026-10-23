@@ -9,19 +9,19 @@ title: IRNWhitelist.CVars:Get
 ## Description
 ---
 
-Get ConVar value
+Get ConVar value.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;The ConVar name
+&emsp;The ConVar name.
 
 `2` **`string`** **cv_type**  
-&emsp;The ConVar type
+&emsp;The ConVar type.
 
 `3` **`any?`** **default** *(optional)*  
-&emsp;Default value
+&emsp;Default value.
 
 ## Returns
 ---

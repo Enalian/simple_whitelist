@@ -9,16 +9,16 @@ title: IRNWhitelist.Lang:GetName
 ## Description
 ---
 
-Get language name
+Get language name.
 
 ## Arguments
 ---
 
 `1` **`string`** **lang**  
-&emsp;Input language
+&emsp;Input language.
 
 `2` **`number?`** **mode** *(optional)*  
-&emsp;Print mode
+&emsp;Print mode.
 
 ## Returns
 ---
@@ -30,5 +30,5 @@ Get language name
 ---
 
 ```lua
-return IRNWhitelist.Lang:GetName(self:GetNow(), mode)
+self.Settings.LanguageSelect.ComboBox:AddChoice(IRNWhitelist.Lang:GetName(v), v)
 ```

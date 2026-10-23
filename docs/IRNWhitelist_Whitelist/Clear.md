@@ -9,7 +9,7 @@ title: IRNWhitelist.Whitelist.Clear
 ## Description
 ---
 
-Clear whitelist (remove all players from the whitelist)
+Clear whitelist (remove all players from the whitelist).
 
 ## Arguments
 ---

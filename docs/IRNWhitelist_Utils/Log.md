@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.Log
 ## Description
 ---
 
-Write string into a log file
+Write string into a log file.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;The string to log
+&emsp;The string to log.
 
 ## Returns
 ---

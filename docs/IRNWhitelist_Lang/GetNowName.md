@@ -9,13 +9,13 @@ title: IRNWhitelist.Lang:GetNowName
 ## Description
 ---
 
-Get now language name
+Get now language name.
 
 ## Arguments
 ---
 
 `1` **`number?`** **mode** *(optional)*  
-&emsp;Print mode
+&emsp;Print mode.
 
 ## Returns
 ---

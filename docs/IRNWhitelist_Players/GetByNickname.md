@@ -3,24 +3,24 @@ title: IRNWhitelist.Players.GetByNickname
 ---
 
 ```lua
-🟦 Player|nil IRNWhitelist.Players.GetByNickname(string name)
+🟦 Player or nil IRNWhitelist.Players.GetByNickname(string name)
 ```
 
 ## Description
 ---
 
-Get player by nickname
+Get player by nickname.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;Input name
+&emsp;Input name.
 
 ## Returns
 ---
 
-`1` **`Player|nil`**  
+`1` **`Player or nil`**  
 &emsp;Return value.
 
 ## Example

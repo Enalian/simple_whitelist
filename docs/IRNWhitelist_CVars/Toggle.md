@@ -9,13 +9,13 @@ title: IRNWhitelist.CVars:Toggle
 ## Description
 ---
 
-Toggle boolean ConVar value
+Toggle boolean ConVar value.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;The ConVar name
+&emsp;The ConVar name.
 
 ## Returns
 ---

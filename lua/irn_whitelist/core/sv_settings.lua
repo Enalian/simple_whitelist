@@ -40,7 +40,7 @@ function IRNWhitelist.Settings:Set(param, value)
 	local settings = self.Read()
 	settings[param] = value
 
-	hook.Run("IRNWhitelistSettingsParamSet", param, value)
+	hook.Run("IRNWhitelistSettingsParamSet", param, value) -- Calls when settings parameter has been set
 	return self:Write(settings)
 end
 
@@ -52,7 +52,7 @@ function IRNWhitelist.Settings:Save()
 		settings[cvar_name] = IRNWhitelist.CVars:Get(cvar_name, cvar_type, nil)
 	end
 
-	hook.Run("IRNWhitelistSettingsSaved", settings)
+	hook.Run("IRNWhitelistSettingsSaved", settings) -- Calls when settings has been saved
 	return self:Write(settings)
 end
 
@@ -83,7 +83,7 @@ function IRNWhitelist.Settings:Write(settings)
 		end
 	end
 
-	hook.Run("IRNWhitelistSettingsWrited", settings)
+	hook.Run("IRNWhitelistSettingsWrited", settings) -- Calls when settings has been writed to file
 	return IRNWhitelist.Files:WriteJSON("settings", settings)
 end
 
@@ -117,7 +117,7 @@ function IRNWhitelist.Settings:Apply()
 
 		IRNWhitelist.CVars:Set(name, self._Allowed[name], v)
 	end
-	hook.Run("IRNWhitelistSettingsApplied", self.Read())
+	hook.Run("IRNWhitelistSettingsApplied", self.Read()) -- Calls when settings has been applied
 end
 
 --- Collect all settings into table (key = parameter name, value = parameter value)

@@ -9,7 +9,7 @@ title: IRNWhitelist.Lang:GetNow
 ## Description
 ---
 
-Get current language
+Get current language.
 
 ## Arguments
 ---

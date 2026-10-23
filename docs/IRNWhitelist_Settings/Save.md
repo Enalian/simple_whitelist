@@ -9,7 +9,7 @@ title: IRNWhitelist.Settings:Save
 ## Description
 ---
 
-Save settings
+Save settings.
 
 ## Arguments
 ---

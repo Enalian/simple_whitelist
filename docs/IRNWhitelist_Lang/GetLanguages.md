@@ -9,7 +9,7 @@ title: IRNWhitelist.Lang.GetLanguages
 ## Description
 ---
 
-Get list of all languages
+Get list of all languages.
 
 ## Arguments
 ---
@@ -26,5 +26,5 @@ Get list of all languages
 ---
 
 ```lua
-return table.HasValue(IRNWhitelist.Lang.GetLanguages(), lang:lower())
+for _, v in ipairs(IRNWhitelist.Lang.GetLanguages()) do
 ```

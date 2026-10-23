@@ -9,7 +9,7 @@ title: IRNWhitelist.Whitelist.ClearDuplicates
 ## Description
 ---
 
-Remove duplicated players from whitelist
+Remove duplicated players from whitelist.
 
 ## Arguments
 ---

@@ -9,13 +9,13 @@ title: IRNWhitelist.Console.HelpRaw
 ## Description
 ---
 
-Print raw help message text into client console
+Print raw help message text into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Text to print
+&emsp;Text to print.
 
 ## Example
 ---

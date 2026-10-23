@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist:RemovePlayerOnce
 ## Description
 ---
 
-Remove once player from the whitelist
+Remove once player from the whitelist.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player's SteamID64
+&emsp;Player's SteamID64.
 
 ## Returns
 ---

@@ -9,16 +9,16 @@ title: IRNWhitelist.Files:WriteLines
 ## Description
 ---
 
-Write lines to file
+Write lines to file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string[]`** **ctx**  
-&emsp;File data
+&emsp;File data.
 
 ## Returns
 ---

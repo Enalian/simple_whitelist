@@ -9,13 +9,13 @@ title: IRNWhitelist:WriteSettings
 ## Description
 ---
 
-Write addon settings to file
+Write addon settings to file.
 
 ## Arguments
 ---
 
 `1` **`table`** **settings**  
-&emsp;New settings
+&emsp;New settings.
 
 ## Example
 ---

@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.GeneratePIN
 ## Description
 ---
 
-Generate server password pin-code
+Generate server password pin-code.
 
 ## Arguments
 ---
 
 `1` **`number?`** **digits** *(optional)*  
-&emsp;Digits count
+&emsp;Digits count.
 
 ## Returns
 ---

@@ -9,13 +9,13 @@ title: IRNWhitelist.Console.WarnRaw
 ## Description
 ---
 
-Print raw warning text into client console
+Print raw warning text into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Text to print
+&emsp;Text to print.
 
 `2` **`boolean?`** **no_log** *(optional)*  
 &emsp;Need to be logged?

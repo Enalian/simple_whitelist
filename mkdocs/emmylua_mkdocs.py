@@ -3,11 +3,15 @@
 
 """
 EmmyLua / LuaLS & GLua to MkDocs Markdown Generator (GMod Wiki Style)
-- Строгое игнорирование папок и всех их подпапок через .docignore (с поддержкой вложенных путей)
-- Раздельные папки для подмодулей (например, IRNWhitelist.Files -> IRNWhitelist_Files/)
-- Отдельный .md файл на каждую функцию, защита от захвата внутренних VGUI колбеков (исправлено для вложенных модулей)
-- Вывод источника функции только в консоль при генерации
-- Документация генерируется на английском языке
+- Строгое игнорирование папок и всех их подпапок через .docignore
+- Раздельные папки для подмодулей
+- Отдельный .md файл на каждую функцию
+- Автоматический сбор хуков (hook.Run / hook.Call) в категорию Hooks
+- Авто-определение типов переменных в хуках из родительской функции и локальных переменных
+- Корректный парсинг аргументов-функций в хуках (например, self.Read() -> table data1)
+- Безотказный сбор комментариев над/рядом с хуками
+- Вывод источника функции в консоль
+- Автоматическое добавление точки в конце всех описаний
 - Автоматическое обновление секции nav: в mkdocs.yml через флаг --update-nav
 """
 
@@ -65,6 +69,7 @@ class FuncDoc:
     deprecated_msg: str = ""
     realm: str = "SHARED"
     is_method: bool = False
+    is_hook: bool = False
     source_file: str = ""
 
 
@@ -78,8 +83,6 @@ class ModuleDoc:
 
 
 class DocIgnoreChecker:
-    """Загружает правила из .docignore и строго проверяет файлы относительно расположения самого .docignore."""
-
     def __init__(self, root_dir: Path):
         self.raw_patterns: List[str] = []
         self.base_dir = root_dir.resolve()
@@ -253,6 +256,9 @@ class UsageExampleHelper:
 
     @classmethod
     def find_call_in_codebase(cls, fn: FuncDoc, all_files_lines: List[List[str]]) -> Optional[str]:
+        if fn.is_hook:
+            return None
+
         direct_pat = re.compile(rf'(?<!function\s)\b{re.escape(fn.name)}\s*\(')
         self_pat = None
         if fn.owner_prefix:
@@ -296,6 +302,10 @@ class UsageExampleHelper:
 
     @classmethod
     def synthesize_example(cls, fn: FuncDoc) -> str:
+        if fn.is_hook:
+            args_str = ", ".join([p.name for p in fn.params])
+            return f"hook.Add(\"{fn.name}\", \"UniqueIdentifier\", function({args_str})\n    -- Your code here\nend)"
+
         call_args = [cls.guess_value_for_param(p) for p in fn.params]
         args_str = ", ".join(call_args)
 
@@ -335,9 +345,6 @@ class UsageExampleHelper:
 class LuaDocParser:
     RE_MODULE_TAG = re.compile(r'^@module\s+[\'"]?([a-zA-Z0-9_.\-]+)[\'"]?(?:\s+(.*))?$')
     RE_CLASS_TAG = re.compile(r'^@class\s+([a-zA-Z0-9_.]+)(?:\s*:\s*([a-zA-Z0-9_.]+))?(?:\s+(.*))?$')
-    RE_FIELD_TAG = re.compile(r'^@field\s+(?:(public|protected|private)\s+)?([a-zA-Z0-9_?]+)\s+([^\s]+)(?:\s+(.*))?$')
-    RE_PARAM_TAG = re.compile(r'^@param\s+([a-zA-Z0-9_.?]+|\.\.\.)\s+([^\s@]+)(?:\s+(.*))?$')
-    RE_RETURN_TAG = re.compile(r'^@return\s+([^\s@]+)(?:\s+([a-zA-Z0-9_]+))?(?:\s+(.*))?$')
     RE_DEPRECATED_TAG = re.compile(r'^@deprecated(?:\s+(.*))?$')
     RE_USAGE_TAG = re.compile(r'^@(?:usage|example)\b(?:\s+(.*))?$', re.IGNORECASE)
     RE_REALM_TAG = re.compile(r'^@(server|client|shared|realm)\b(?:\s+(.*))?$', re.IGNORECASE)
@@ -355,6 +362,8 @@ class LuaDocParser:
         r'^\s*function\s+([a-zA-Z_][a-zA-Z0-9_.:]*)\s*\(([^)]*)\)|'
         r'^\s*([a-zA-Z_][a-zA-Z0-9_.]*)\s*=\s*function\s*\(([^)]*)\)'
     )
+    RE_HOOK = re.compile(r'hook\.(Run|Call)\s*\(\s*[\'"]([a-zA-Z0-9_.:\-]+)[\'"](.*)')
+    RE_ANY_FUNC_SIG = re.compile(r'\b(?:function\s*[a-zA-Z0-9_.:]*|[a-zA-Z0-9_.:]+\s*=\s*function)\s*\(([^)]*)\)')
 
     RE_IF_REALM = re.compile(r'^\s*(?:else)?if\s+(SERVER|CLIENT)\s+then\b')
     RE_BLOCK_START = re.compile(r'\b(function|if|for|while|repeat)\b')
@@ -362,6 +371,53 @@ class LuaDocParser:
 
     def __init__(self, include_undocumented: bool = True):
         self.include_undocumented = include_undocumented
+
+    @staticmethod
+    def extract_emmylua_type_and_rest(text: str) -> Tuple[str, str]:
+        if not text:
+            return "", ""
+        paren_c = 0
+        angle_c = 0
+        for i, char in enumerate(text):
+            if char == '(': paren_c += 1
+            elif char == ')': paren_c -= 1
+            elif char == '<': angle_c += 1
+            elif char == '>': angle_c -= 1
+            
+            if char == ' ' and paren_c == 0 and angle_c == 0:
+                if text[i:i+3] in (" | ", " : "):
+                    continue
+                if i > 0 and text[i-1] in ("|", ":"):
+                    continue
+                if i+1 < len(text) and text[i+1] in ("|", ":"):
+                    continue
+                return text[:i].strip(), text[i+1:].strip()
+        return text.strip(), ""
+
+    @staticmethod
+    def guess_type_by_name(name: str) -> str:
+        name_lower = name.lower()
+        if name_lower in ("ply", "player", "client", "attacker", "victim", "caller", "activator"):
+            return "Player"
+        if name_lower in ("ent", "entity", "target", "weapon", "vehicle"):
+            return "Entity"
+        if name_lower in ("oldvalue", "newvalue", "str", "text", "reason", "name", "id", "uid", "title", "path", "msg", "cmd"):
+            return "string"
+        if name_lower in ("amount", "count", "num", "index", "idx", "time", "delay", "price", "weight", "slot", "health", "damage", "len"):
+            return "number"
+        if name_lower in ("tbl", "data", "list", "items", "options", "args", "cfg") or name_lower.startswith("data"):
+            return "table"
+        if name_lower.startswith(("is", "has", "can", "should", "b_")):
+            return "boolean"
+        if name_lower in ("pos", "position", "origin", "vec"):
+            return "Vector"
+        if name_lower in ("ang", "angle", "angles"):
+            return "Angle"
+        if name_lower in ("col", "color", "clr"):
+            return "Color"
+        if name_lower in ("func", "cb", "callback", "on_change"):
+            return "function"
+        return "any"
 
     @staticmethod
     def preprocess_lines(content: str) -> List[str]:
@@ -429,7 +485,7 @@ class LuaDocParser:
                 locals_set.add(m.group(1))
         return locals_set
 
-    def parse_file(self, file_path: Path, root_dir: Path, lines: List[str]) -> Tuple[str, Path, str, List[ClassDoc], List[FuncDoc]]:
+    def parse_file(self, file_path: Path, root_dir: Path, lines: List[str]) -> Tuple[str, Path, str, List[ClassDoc], List[FuncDoc], List[FuncDoc]]:
         rel_dir = file_path.relative_to(root_dir).parent
         mod_name, mod_desc = self.detect_module_name(lines, file_path)
         local_vars = self.find_local_tables(lines)
@@ -437,12 +493,15 @@ class LuaDocParser:
 
         classes: List[ClassDoc] = []
         functions: List[FuncDoc] = []
+        hooks: List[FuncDoc] = []
         doc_buffer: List[str] = []
 
         realm_stack: List[Tuple[int, str]] = []
         block_depth = 0
+        active_params: Dict[str, ParamDoc] = {}
+        active_locals: Dict[str, str] = {}
 
-        for raw_line in lines:
+        for idx, raw_line in enumerate(lines, start=1):
             stripped = raw_line.strip()
 
             if stripped.startswith("---") and not stripped.startswith("----"):
@@ -486,7 +545,151 @@ class LuaDocParser:
 
             current_realm = realm_stack[-1][1] if realm_stack else file_realm
 
+            m_any_func = self.RE_ANY_FUNC_SIG.search(code_line)
+            if m_any_func:
+                raw_args = m_any_func.group(1)
+                func_args_list = [a.strip() for a in raw_args.split(",") if a.strip()]
+                active_params.clear()
+                active_locals.clear()
+                params_map = {}
+                for item in doc_buffer:
+                    if item.startswith("@param"):
+                        parts = item.split(maxsplit=2)
+                        if len(parts) >= 2:
+                            raw_pname = parts[1]
+                            rest = parts[2] if len(parts) > 2 else ""
+                            ptype, pdesc = self.extract_emmylua_type_and_rest(rest)
+                            if not ptype: ptype = "any"
+                            pname = raw_pname[:-1] if raw_pname.endswith("?") else raw_pname
+                            clean_ptype = ptype[:-1] if ptype.endswith("?") else ptype
+                            params_map[pname] = ParamDoc(name=pname, type_name=clean_ptype, description=pdesc)
+
+                for arg in func_args_list:
+                    if arg in params_map:
+                        active_params[arg] = params_map[arg]
+                    else:
+                        guessed_type = self.guess_type_by_name(arg)
+                        active_params[arg] = ParamDoc(name=arg, type_name=guessed_type)
+
+            m_loc = re.match(r'^local\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.*)', code_line)
+            if m_loc:
+                var_name = m_loc.group(1)
+                expr = m_loc.group(2).lower()
+                if any(kw in expr for kw in ["int2bool", "tobool", "==", "~=", "true", "false", "is", "has"]):
+                    active_locals[var_name] = "boolean"
+                elif "tonumber" in expr:
+                    active_locals[var_name] = "number"
+                elif "tostring" in expr or '\"' in expr or '\'' in expr:
+                    active_locals[var_name] = "string"
+                elif "{}" in expr or "table." in expr:
+                    active_locals[var_name] = "table"
+                else:
+                    active_locals[var_name] = "any"
+
             if self.RE_LOCAL_FUNC.match(code_line):
+                doc_buffer.clear()
+                continue
+
+            m_hook = self.RE_HOOK.search(code_line)
+            if m_hook:
+                hook_type = m_hook.group(1)
+                hook_name = m_hook.group(2)
+                raw_rest = m_hook.group(3)
+                
+                args_list = []
+                if "," in raw_rest:
+                    parts = raw_rest.split(",", 1)[1]
+                    parts = parts.rsplit(")", 1)[0]
+                    
+                    paren_level = 0
+                    current_arg = ""
+                    arg_chunks = []
+                    for char in parts:
+                        if char == '(': paren_level += 1
+                        elif char == ')': paren_level -= 1
+                        elif char == ',' and paren_level == 0:
+                            arg_chunks.append(current_arg)
+                            current_arg = ""
+                            continue
+                        current_arg += char
+                    if current_arg:
+                        arg_chunks.append(current_arg)
+                    
+                    if hook_type == "Call" and arg_chunks:
+                        arg_chunks = arg_chunks[1:]
+                        
+                    for i, chunk in enumerate(arg_chunks):
+                        chunk_clean = chunk.strip()
+                        if not chunk_clean:
+                            continue
+                        
+                        simplified = re.sub(r'["\'].*?["\']', '""', chunk_clean)
+                        
+                        if "(" in simplified:
+                            args_list.append(f"data{i+1}")
+                        elif simplified in ("true", "false"):
+                            args_list.append(f"b{i+1}")
+                        elif simplified.isdigit():
+                            args_list.append(f"num{i+1}")
+                        elif simplified.startswith('""'):
+                            args_list.append(f"str{i+1}")
+                        else:
+                            if "." in chunk_clean or ":" in chunk_clean:
+                                last_part = re.split(r'[.:]', chunk_clean)[-1]
+                                last_part = re.sub(r'[^a-zA-Z0-9_]', '', last_part)
+                                if last_part:
+                                    args_list.append(last_part)
+                                else:
+                                    args_list.append(f"arg{i+1}")
+                            else:
+                                matches = re.findall(r'[a-zA-Z_][a-zA-Z0-9_]*', chunk_clean)
+                                if matches:
+                                    args_list.append(matches[-1])
+                                else:
+                                    args_list.append(f"arg{i+1}")
+
+                if doc_buffer or self.include_undocumented:
+                    inline_m = re.search(r'(?:--|//)\s*(.*)$', raw_line)
+                    inline_comment = inline_m.group(1).strip() if inline_m else ""
+                    
+                    prev_line = lines[idx - 2].strip() if idx >= 2 else ""
+                    prev_comment = ""
+                    if prev_line.startswith("--") and not prev_line.startswith("---") and not prev_line.startswith("--[["):
+                        prev_comment = prev_line[2:].strip()
+                        
+                    temp_buffer = list(doc_buffer)
+                    if not temp_buffer:
+                        if inline_comment:
+                            temp_buffer.append(inline_comment)
+                        elif prev_comment:
+                            temp_buffer.append(prev_comment)
+
+                    try:
+                        rel_src = file_path.relative_to(root_dir).as_posix()
+                    except ValueError:
+                        rel_src = file_path.as_posix()
+                        
+                    func_doc = self._build_func_from_buffer(hook_name, args_list, temp_buffer, current_realm)
+                    
+                    for p in func_doc.params:
+                        if p.type_name == "any":
+                            if p.name in active_params:
+                                p.type_name = active_params[p.name].type_name
+                                if not p.description and active_params[p.name].description:
+                                    p.description = active_params[p.name].description
+                            elif p.name in active_locals:
+                                p.type_name = active_locals[p.name]
+                            else:
+                                p.type_name = self.guess_type_by_name(p.name)
+                                
+                    func_doc.source_file = rel_src
+                    func_doc.is_hook = True
+                    func_doc.name = hook_name
+                    func_doc.short_name = hook_name
+                    func_doc.owner_prefix = ""
+                    func_doc.sep = ""
+                    hooks.append(func_doc)
+
                 doc_buffer.clear()
                 continue
 
@@ -494,8 +697,6 @@ class LuaDocParser:
             if m_func:
                 func_name = m_func.group(1) or m_func.group(3)
                 
-                # Защита от VGUI колбеков: отсекаем только если начинается с self
-                # Убрано func_name.count(".") > 1, чтобы не ломать IRNWhitelist.Commands.New
                 if func_name.startswith("self.") or func_name.startswith("self:") or func_name == "self":
                     doc_buffer.clear()
                     continue
@@ -539,7 +740,7 @@ class LuaDocParser:
             if cls_doc:
                 classes.append(cls_doc)
 
-        return mod_name, rel_dir, mod_desc, classes, functions
+        return mod_name, rel_dir, mod_desc, classes, functions, hooks
 
     def _build_class_from_buffer(self, buffer: List[str]) -> Optional[ClassDoc]:
         cls_doc = None
@@ -555,13 +756,22 @@ class LuaDocParser:
                         description=(m.group(3) or "").strip()
                     )
             elif item.startswith("@field") and cls_doc:
-                m = self.RE_FIELD_TAG.match(item)
-                if m:
-                    access = m.group(1) or "public"
-                    fname = m.group(2)
-                    ftype = m.group(3)
-                    fdesc = (m.group(4) or "").strip()
-                    cls_doc.fields[fname] = FieldDoc(name=fname, type_name=ftype, description=fdesc, access=access)
+                parts = item.split(maxsplit=1)
+                if len(parts) > 1:
+                    rest = parts[1]
+                    access = "public"
+                    if rest.startswith(("public ", "protected ", "private ")):
+                        access_parts = rest.split(maxsplit=1)
+                        access = access_parts[0]
+                        rest = access_parts[1] if len(access_parts) > 1 else ""
+                    
+                    if rest:
+                        name_parts = rest.split(maxsplit=1)
+                        fname = name_parts[0]
+                        rest2 = name_parts[1] if len(name_parts) > 1 else ""
+                        ftype, fdesc = self.extract_emmylua_type_and_rest(rest2)
+                        if not ftype: ftype = "any"
+                        cls_doc.fields[fname] = FieldDoc(name=fname, type_name=ftype, description=fdesc, access=access)
             elif not item.startswith("@"):
                 desc_lines.append(item)
 
@@ -588,22 +798,32 @@ class LuaDocParser:
 
         for item in buffer:
             if item.startswith("@param"):
-                m = self.RE_PARAM_TAG.match(item)
-                if m:
-                    raw_pname = m.group(1)
-                    ptype = m.group(2)
-                    pdesc = (m.group(3) or "").strip()
+                parts = item.split(maxsplit=2)
+                if len(parts) >= 2:
+                    raw_pname = parts[1]
+                    rest = parts[2] if len(parts) > 2 else ""
+                    ptype, pdesc = self.extract_emmylua_type_and_rest(rest)
+                    if not ptype: ptype = "any"
+                    
                     is_opt = raw_pname.endswith("?") or ptype.endswith("?")
                     pname = raw_pname[:-1] if raw_pname.endswith("?") else raw_pname
                     clean_ptype = ptype[:-1] if ptype.endswith("?") else ptype
                     params_map[pname] = ParamDoc(name=pname, type_name=clean_ptype, description=pdesc, optional=is_opt)
+                    
             elif item.startswith("@return"):
-                m = self.RE_RETURN_TAG.match(item)
-                if m:
-                    rtype = m.group(1)
-                    rname = m.group(2) or ""
-                    rdesc = (m.group(3) or "").strip()
+                parts = item.split(maxsplit=1)
+                if len(parts) > 1:
+                    rest = parts[1]
+                    rtype, rdesc_full = self.extract_emmylua_type_and_rest(rest)
+                    rname = ""
+                    rdesc = rdesc_full
+                    if rdesc_full:
+                        desc_parts = rdesc_full.split(maxsplit=1)
+                        if re.match(r'^[a-zA-Z0-9_]+$', desc_parts[0]):
+                            rname = desc_parts[0]
+                            rdesc = desc_parts[1] if len(desc_parts) > 1 else ""
                     returns.append(ReturnDoc(type_name=rtype, name=rname, description=rdesc))
+                    
             elif item.startswith("@deprecated"):
                 m = self.RE_DEPRECATED_TAG.match(item)
                 deprecated = True
@@ -695,8 +915,25 @@ def merge_function_docs(existing: FuncDoc, new_fn: FuncDoc) -> FuncDoc:
     return existing
 
 
+def _format_type_string(type_name: str) -> str:
+    res = re.sub(r'\bfun\(', 'function(', type_name)
+    res = res.replace("|", " or ")
+    return res
+
+
+def _ensure_period(text: str) -> str:
+    if not text:
+        return ""
+    text = text.strip()
+    if not text:
+        return ""
+    if text[-1] not in ('.', '!', '?'):
+        return text + '.'
+    return text
+
+
 def _format_param_type_gmod(p: ParamDoc) -> str:
-    raw_type = p.type_name.replace("|", " or ")
+    raw_type = _format_type_string(p.type_name)
     if p.optional and not raw_type.endswith("?"):
         return f"{raw_type}?"
     return raw_type
@@ -710,9 +947,16 @@ def format_gmod_signature_box(fn: FuncDoc) -> str:
     }
     icon = realm_icons.get(fn.realm, "🟦🟨")
 
+    if fn.is_hook:
+        args_formatted = []
+        for p in fn.params:
+            args_formatted.append(f"{_format_param_type_gmod(p)} {p.name}")
+        inner_args = ", ".join(args_formatted)
+        return f"{icon} hook.Add(\"{fn.name}\", \"identifier\", function({inner_args}))"
+
     ret_prefix = ""
     if fn.returns:
-        ret_types = ", ".join(r.type_name for r in fn.returns)
+        ret_types = ", ".join(_format_type_string(r.type_name) for r in fn.returns)
         ret_prefix = f"{ret_types} "
 
     if fn.params:
@@ -731,9 +975,17 @@ def format_gmod_signature_box(fn: FuncDoc) -> str:
 
 
 def format_gmod_index_signature_line(fn: FuncDoc, md_filename: str) -> str:
+    if fn.is_hook:
+        if fn.params:
+            args_formatted = [f"{_format_param_type_gmod(p)} {p.name}" for p in fn.params]
+            right_code = f"`({', '.join(args_formatted)})`"
+        else:
+            right_code = "`()`"
+        return f"[**`{fn.name}`**]({md_filename}){right_code}"
+
     ret_prefix = ""
     if fn.returns:
-        ret_types = ", ".join(r.type_name for r in fn.returns)
+        ret_types = ", ".join(_format_type_string(r.type_name) for r in fn.returns)
         ret_prefix = f"{ret_types} "
 
     owner_part = f"{fn.owner_prefix}{fn.sep}" if fn.owner_prefix else ""
@@ -767,14 +1019,14 @@ def render_function_markdown(fn: FuncDoc, all_files_lines: List[List[str]]) -> s
     ]
 
     if fn.deprecated:
-        msg = fn.deprecated_msg or "This function is deprecated and is not recommended for use."
+        msg = _ensure_period(fn.deprecated_msg) if fn.deprecated_msg else "This function is deprecated and is not recommended for use."
         out.append(f"> ⚠️ **Deprecated:** {msg}")
         out.append("")
 
     out.append("## Description")
     out.append("---")
     out.append("")
-    out.append(fn.description if fn.description else "No description provided.")
+    out.append(_ensure_period(fn.description) if fn.description else "No description provided.")
     out.append("")
 
     out.append("## Arguments")
@@ -784,7 +1036,7 @@ def render_function_markdown(fn: FuncDoc, all_files_lines: List[List[str]]) -> s
         for idx, p in enumerate(fn.params, start=1):
             opt_label = " *(optional)*" if p.optional else ""
             out.append(f"`{idx}` **`{_format_param_type_gmod(p)}`** **{p.name}**{opt_label}  ")
-            desc = p.description if p.description else "No description provided for this argument."
+            desc = _ensure_period(p.description) if p.description else "No description provided for this argument."
             out.append(f"&emsp;{desc}")
             out.append("")
     else:
@@ -797,8 +1049,8 @@ def render_function_markdown(fn: FuncDoc, all_files_lines: List[List[str]]) -> s
         out.append("")
         for idx, r in enumerate(fn.returns, start=1):
             rname = f" **{r.name}**" if r.name else ""
-            out.append(f"`{idx}` **`{r.type_name}`**{rname}  ")
-            rdesc = r.description if r.description else "Return value."
+            out.append(f"`{idx}` **`{_format_type_string(r.type_name)}`**{rname}  ")
+            rdesc = _ensure_period(r.description) if r.description else "Return value."
             out.append(f"&emsp;{rdesc}")
             out.append("")
 
@@ -829,7 +1081,7 @@ def render_module_index_markdown(mod: ModuleDoc, func_links: List[Tuple[FuncDoc,
     ]
 
     if mod.description:
-        out.append(mod.description)
+        out.append(_ensure_period(mod.description))
     else:
         out.append(f"List of all available functions and methods in the `{mod.name}` module.")
     out.append("")
@@ -843,16 +1095,28 @@ def render_module_index_markdown(mod: ModuleDoc, func_links: List[Tuple[FuncDoc,
             out.append(f"### `{cls.name}`{inh}")
             out.append("")
             if cls.description:
-                out.append(cls.description)
+                out.append(_ensure_period(cls.description))
                 out.append("")
             for idx, (_, f) in enumerate(sorted(cls.fields.items()), start=1):
-                out.append(f"`{idx}` **`{f.type_name}`** **{f.name}** *({f.access})*  ")
+                out.append(f"`{idx}` **`{_format_type_string(f.type_name)}`** **{f.name}** *({f.access})*  ")
                 if f.description:
-                    out.append(f"&emsp;{f.description}")
+                    out.append(f"&emsp;{_ensure_period(f.description)}")
                 out.append("")
 
-    methods = [(fn, fname) for fn, fname in func_links if fn.is_method]
-    functions = [(fn, fname) for fn, fname in func_links if not fn.is_method]
+    methods = [(fn, fname) for fn, fname in func_links if fn.is_method and not fn.is_hook]
+    functions = [(fn, fname) for fn, fname in func_links if not fn.is_method and not fn.is_hook]
+    hooks = [(fn, fname) for fn, fname in func_links if fn.is_hook]
+
+    if hooks:
+        out.append("## Events & Hooks")
+        out.append("---")
+        out.append("")
+        for fn, fname_md in hooks:
+            sig_line = format_gmod_index_signature_line(fn, fname_md)
+            short_desc = fn.description.splitlines()[0] if fn.description else "No description provided."
+            out.append(f"{sig_line}  ")
+            out.append(f"&emsp;{_ensure_period(short_desc)}")
+            out.append("")
 
     if methods:
         out.append("## Methods")
@@ -862,7 +1126,7 @@ def render_module_index_markdown(mod: ModuleDoc, func_links: List[Tuple[FuncDoc,
             sig_line = format_gmod_index_signature_line(fn, fname_md)
             short_desc = fn.description.splitlines()[0] if fn.description else "No description provided."
             out.append(f"{sig_line}  ")
-            out.append(f"&emsp;{short_desc}")
+            out.append(f"&emsp;{_ensure_period(short_desc)}")
             out.append("")
 
     if functions:
@@ -873,7 +1137,7 @@ def render_module_index_markdown(mod: ModuleDoc, func_links: List[Tuple[FuncDoc,
             sig_line = format_gmod_index_signature_line(fn, fname_md)
             short_desc = fn.description.splitlines()[0] if fn.description else "No description provided."
             out.append(f"{sig_line}  ")
-            out.append(f"&emsp;{short_desc}")
+            out.append(f"&emsp;{_ensure_period(short_desc)}")
             out.append("")
 
     return "\n".join(out)
@@ -884,6 +1148,7 @@ def generate_docs(src_dir: Path, out_dir: Path, include_undoc: bool = True, gen_
     ignore_checker = DocIgnoreChecker(src_dir)
     parser = LuaDocParser(include_undocumented=include_undoc)
     modules: Dict[str, ModuleDoc] = {}
+    global_hooks: Dict[str, FuncDoc] = {}
 
     all_lua_files = sorted(src_dir.rglob("*.lua"))
     if not all_lua_files:
@@ -919,7 +1184,13 @@ def generate_docs(src_dir: Path, out_dir: Path, include_undoc: bool = True, gen_
         valid_lua_files.append((lua_file, lines))
 
     for lua_file, lines in valid_lua_files:
-        mod_name, rel_dir, mod_desc, classes, functions = parser.parse_file(lua_file, src_dir, lines)
+        mod_name, rel_dir, mod_desc, classes, functions, file_hooks = parser.parse_file(lua_file, src_dir, lines)
+
+        for hk in file_hooks:
+            if hk.name in global_hooks:
+                merge_function_docs(global_hooks[hk.name], hk)
+            else:
+                global_hooks[hk.name] = hk
 
         if not classes and not functions and not mod_desc:
             continue
@@ -945,6 +1216,11 @@ def generate_docs(src_dir: Path, out_dir: Path, include_undoc: bool = True, gen_
                 merge_function_docs(mod_obj.functions[fn.name], fn)
             else:
                 mod_obj.functions[fn.name] = fn
+
+    if global_hooks:
+        hooks_mod = ModuleDoc(name="Hooks", rel_dir=Path("Hooks"), description="List of all available custom hooks and events.")
+        hooks_mod.functions = global_hooks
+        modules["Hooks"] = hooks_mod
 
     out_dir.mkdir(parents=True, exist_ok=True)
     nav_tree: List[Tuple[str, Path, List[Tuple[str, Path]]]] = []
@@ -977,7 +1253,8 @@ def generate_docs(src_dir: Path, out_dir: Path, include_undoc: bool = True, gen_
             mod_nav_items.append((fn.short_name, fn_md_path.relative_to(out_dir)))
             
             src_display = f" (из {fn.source_file})" if fn.source_file else ""
-            print(f"[+] Сгенерирована функция '{fn.name}' [{fn.realm}]{src_display} -> {fn_md_path}")
+            h_mark = "[HOOK] " if fn.is_hook else ""
+            print(f"[+] Сгенерирована {h_mark}'{fn.name}' [{fn.realm}]{src_display} -> {fn_md_path}")
 
         mod_index_path = mod_folder / "index.md"
         mod_index_content = render_module_index_markdown(mod_obj, func_links_for_index)

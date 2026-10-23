@@ -9,13 +9,13 @@ title: IRNWhitelist.Files:ReadLines
 ## Description
 ---
 
-Read lines from file
+Read lines from file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 ## Returns
 ---

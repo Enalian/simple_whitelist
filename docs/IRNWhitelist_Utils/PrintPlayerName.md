@@ -9,16 +9,16 @@ title: IRNWhitelist.Utils.PrintPlayerName
 ## Description
 ---
 
-Generate printable player name
+Generate printable player name.
 
 ## Arguments
 ---
 
 `1` **`Player or string`** **plyOrName**  
-&emsp;Player or player name
+&emsp;Player or player name.
 
 `2` **`string?`** **sid64** *(optional)*  
-&emsp;Player SteamID64
+&emsp;Player SteamID64.
 
 `3` **`boolean?`** **logs_print** *(optional)*  
 &emsp;For logs?

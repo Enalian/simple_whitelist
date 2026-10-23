@@ -9,13 +9,13 @@ title: IRNWhitelist.Utils.ParseIP
 ## Description
 ---
 
-Get IP from IP:Port
+Get IP from IP:Port.
 
 ## Arguments
 ---
 
 `1` **`string`** **ipa**  
-&emsp;IP:Port
+&emsp;IP:Port.
 
 ## Returns
 ---

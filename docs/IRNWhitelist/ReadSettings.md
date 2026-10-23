@@ -9,7 +9,7 @@ title: IRNWhitelist:ReadSettings
 ## Description
 ---
 
-Read addon settings
+Read addon settings.
 
 ## Arguments
 ---

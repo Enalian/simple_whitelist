@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist:RemovePlayer
 ## Description
 ---
 
-Remove player from the whitelist
+Remove player from the whitelist.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player's SteamID64
+&emsp;Player's SteamID64.
 
 ## Returns
 ---

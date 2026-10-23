@@ -9,13 +9,13 @@ title: IRNWhitelist:HasLanguage
 ## Description
 ---
 
-Check if language has in addon
+Check if language has in addon.
 
 ## Arguments
 ---
 
 `1` **`string`** **lang**  
-&emsp;Needed language
+&emsp;Needed language.
 
 ## Returns
 ---

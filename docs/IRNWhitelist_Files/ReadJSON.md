@@ -9,13 +9,13 @@ title: IRNWhitelist.Files:ReadJSON
 ## Description
 ---
 
-Read file content as JSON
+Read file content as JSON.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 ## Returns
 ---

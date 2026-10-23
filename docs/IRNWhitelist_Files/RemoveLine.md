@@ -9,19 +9,19 @@ title: IRNWhitelist.Files:RemoveLine
 ## Description
 ---
 
-Remove line from file
+Remove line from file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **ctx**  
-&emsp;Removing line
+&emsp;Removing line.
 
 `3` **`boolean?`** **no_patterns** *(optional)*  
-&emsp;Ignore patterns
+&emsp;Ignore patterns.
 
 ## Returns
 ---

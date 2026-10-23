@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist.IsPlayerWhitelisted
 ## Description
 ---
 
-Check if player whitelisted or not
+Check if player whitelisted or not.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player SteamID64
+&emsp;Player SteamID64.
 
 ## Returns
 ---

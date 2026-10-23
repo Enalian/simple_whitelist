@@ -9,13 +9,13 @@ title: IRNWhitelist.Console.SuccessRaw
 ## Description
 ---
 
-Print raw success message text into client console
+Print raw success message text into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **str**  
-&emsp;Text to print
+&emsp;Text to print.
 
 `2` **`boolean?`** **no_log** *(optional)*  
 &emsp;Need to be logged?

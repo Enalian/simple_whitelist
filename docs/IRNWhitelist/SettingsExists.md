@@ -9,7 +9,7 @@ title: IRNWhitelist:SettingsExists
 ## Description
 ---
 
-Check if settings file and all parameters exists
+Check if settings file and all parameters exists.
 
 ## Arguments
 ---

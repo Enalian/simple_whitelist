@@ -9,7 +9,7 @@ title: IRNWhitelist.Whitelist.IsOn
 ## Description
 ---
 
-Check is whitelist is enabled
+Check is whitelist is enabled.
 
 ## Arguments
 ---
@@ -26,5 +26,5 @@ Check is whitelist is enabled
 ---
 
 ```lua
-if IRNWhitelist.Whitelist.IsOn() then
+if IRNWhitelist.Whitelist.IsOn() and not IRNWhitelist.Whitelist.IsPlayerWhitelisted(steamid) then
 ```

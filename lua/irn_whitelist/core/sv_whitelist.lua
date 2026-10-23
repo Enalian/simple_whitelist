@@ -63,7 +63,7 @@ function IRNWhitelist.Whitelist:AddPlayer(steamid64, once)
 	end
 
 	self.ClearDuplicates()
-	hook.Run("IRNWhitelistPlayerAdded", steamid64, once)
+	hook.Run("IRNWhitelistPlayerAdded", steamid64, once) -- Calls when player has been added to the whitelist
 	return IRNWhitelist.Files:AppendLine("players", string.format("%s%s", steamid64, once and ", once" or ""))
 end
 
@@ -80,7 +80,7 @@ function IRNWhitelist.Whitelist:RemovePlayer(steamid64)
 	end
 
 	self.ClearDuplicates()
-	hook.Run("IRNWhitelistPlayerRemoved", steamid64)
+	hook.Run("IRNWhitelistPlayerRemoved", steamid64) -- Calls when player has been removed from the whitelist
 	return IRNWhitelist.Files:RemoveLine("players", string.format("^%s", steamid64))
 end
 
@@ -102,19 +102,21 @@ function IRNWhitelist.Whitelist:RemovePlayerOnce(steamid64)
 	end
 
 	self.ClearDuplicates()
-	hook.Run("IRNWhitelistPlayerRemovedOnce", steamid64)
+	hook.Run("IRNWhitelistPlayerRemovedOnce", steamid64) -- Calls when once player has been removed from the whitelist
 	return IRNWhitelist.Files:ReplaceLine("players", string.format("^%s,%%s*once", steamid64), steamid64)
 end
 
 --- Clear whitelist (remove all players from the whitelist)
 ---@return boolean
 function IRNWhitelist.Whitelist.Clear()
+	hook.Run("IRNWhitelistCleared") -- Calls when whitelist has been cleared
 	return IRNWhitelist.Files:WriteLines("players", {})
 end
 
 --- Remove duplicated players from whitelist
 ---@return boolean
 function IRNWhitelist.Whitelist.ClearDuplicates()
+	hook.Run("IRNWhitelistDuplicatesCleared") -- Calls when whitelist has been cleared from duplicated players
 	return IRNWhitelist.Files:RemoveDuplicateLines("players")
 end
 
@@ -137,7 +139,7 @@ function IRNWhitelist.Whitelist:SetPlayers(players)
 		end
 	end
 
-	hook.Run("IRNWhitelistPlayersSetted", players)
+	hook.Run("IRNWhitelistPlayersSetted", players) -- Calls when list of whitelisted players has been set
 end
 
 --- Check if player whitelisted or not

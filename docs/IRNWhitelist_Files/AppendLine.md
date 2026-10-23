@@ -9,16 +9,16 @@ title: IRNWhitelist.Files:AppendLine
 ## Description
 ---
 
-Append line to file
+Append line to file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **ctx**  
-&emsp;Appending line
+&emsp;Appending line.
 
 ## Returns
 ---

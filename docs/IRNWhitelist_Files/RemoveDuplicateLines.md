@@ -9,13 +9,13 @@ title: IRNWhitelist.Files:RemoveDuplicateLines
 ## Description
 ---
 
-Remove duplicate lines from file
+Remove duplicate lines from file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 ## Returns
 ---

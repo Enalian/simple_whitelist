@@ -9,16 +9,16 @@ title: IRNWhitelist.Console:Critical
 ## Description
 ---
 
-Print critical error into client console
+Print critical error into client console.
 
 ## Arguments
 ---
 
 `1` **`string`** **phrase**  
-&emsp;Phrase (or text) to print
+&emsp;Phrase (or text) to print.
 
 `2` **`string`** **...**  
-&emsp;Format strings
+&emsp;Format strings.
 
 ## Example
 ---

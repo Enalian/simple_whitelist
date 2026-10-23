@@ -4,14 +4,15 @@ IRNWhitelist.IPasswords = {
 
 --- Set new player password
 ---@param steamid64 string Player SteamID64
----@param password string New password
+---@param password? string New password
 ---@return boolean
+---@return string?
 function IRNWhitelist.IPasswords:SetPassword(steamid64, password)
 	if not IRNWhitelist.Players.IsValidSteamID64(steamid64) then
 		return false
 	end
 	if not isstring(password) or #password < 1 then
-		return false
+		password = IRNWhitelist.Utils.GeneratePIN(5)
 	end
 	if not IRNWhitelist.Whitelist.IsPlayerWhitelisted(steamid64) then
 		return false
@@ -28,8 +29,8 @@ function IRNWhitelist.IPasswords:SetPassword(steamid64, password)
 		)
 	)
 
-	hook.Run("IRNWhitelistIPasswordSet", steamid64, password)
-	return true
+	hook.Run("IRNWhitelistIPasswordSet", steamid64, password) -- Calls when player individual password has been set
+	return true, password
 end
 
 --- Remove player individual password
@@ -45,14 +46,14 @@ function IRNWhitelist.IPasswords:RemovePassword(steamid64)
 
 	sql.Query(string.format("DELETE FROM %s WHERE steamid64 = %s;", self._SQLTable, sql.SQLStr(steamid64)))
 
-	hook.Run("IRNWhitelistIPasswordRemove", steamid64)
+	hook.Run("IRNWhitelistIPasswordRemove", steamid64) -- Calls when player individual password has been removed
 	return true
 end
 
 --- Remove all player individual passwords
 function IRNWhitelist.IPasswords:RemoveAllPasswords()
 	sql.Query(string.format("DELETE FROM %s;", self._SQLTable))
-	hook.Run("IRNWhitelistIPasswordsRemovedAll")
+	hook.Run("IRNWhitelistIPasswordsRemovedAll") -- Calls when all player individual passwords has been removed
 end
 
 --- Check if player has individual password

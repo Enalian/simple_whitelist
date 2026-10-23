@@ -9,7 +9,7 @@ title: IRNWhitelist:ApplySettings
 ## Description
 ---
 
-Apply addon settings from settings file
+Apply addon settings from settings file.
 
 ## Arguments
 ---

@@ -9,22 +9,22 @@ title: IRNWhitelist.Files:ReplaceLine
 ## Description
 ---
 
-Replace line in file
+Replace line in file.
 
 ## Arguments
 ---
 
 `1` **`string`** **name**  
-&emsp;File name
+&emsp;File name.
 
 `2` **`string`** **x**  
-&emsp;Line for replacing
+&emsp;Line for replacing.
 
 `3` **`string`** **y**  
-&emsp;Line to replace
+&emsp;Line to replace.
 
 `4` **`boolean?`** **no_patterns** *(optional)*  
-&emsp;Ignore patterns
+&emsp;Ignore patterns.
 
 ## Returns
 ---

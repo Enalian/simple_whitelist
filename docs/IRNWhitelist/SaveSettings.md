@@ -9,7 +9,7 @@ title: IRNWhitelist:SaveSettings
 ## Description
 ---
 
-Save addon settings
+Save addon settings.
 
 ## Arguments
 ---

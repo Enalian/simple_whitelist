@@ -9,7 +9,7 @@ title: IRNWhitelist.Whitelist.NeedPassword
 ## Description
 ---
 
-Check if player need to provide password to join (on enabled whitelist)
+Check if player need to provide password to join (on enabled whitelist).
 
 ## Arguments
 ---

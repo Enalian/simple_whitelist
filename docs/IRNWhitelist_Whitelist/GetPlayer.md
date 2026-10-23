@@ -9,13 +9,13 @@ title: IRNWhitelist.Whitelist:GetPlayer
 ## Description
 ---
 
-Get information about player from whitelist
+Get information about player from whitelist.
 
 ## Arguments
 ---
 
 `1` **`string`** **steamid64**  
-&emsp;Player SteamID64
+&emsp;Player SteamID64.
 
 ## Returns
 ---

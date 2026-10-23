@@ -9,13 +9,13 @@ title: IRNWhitelist.Lang:Has
 ## Description
 ---
 
-Check if language exists
+Check if language exists.
 
 ## Arguments
 ---
 
 `1` **`string`** **lang**  
-&emsp;Input language
+&emsp;Input language.
 
 ## Returns
 ---
