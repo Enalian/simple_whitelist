@@ -48,12 +48,17 @@ end
 --- Set player nickname (for database)
 ---@param steamid64 string Player SteamID64
 ---@param name string Player nickname
+---@return boolean
 function IRNWhitelist.Players:SetNickname(steamid64, name)
 	if not self.IsValidSteamID64(steamid64) then
-		return
+		return false
 	end
+	if not isstring(name) or #name < 1 then
+		return false
+	end
+
 	if not IRNWhitelist.CVars:Get("save_names", "bool", true) then
-		return
+		return false
 	end
 
 	sql.Query(
@@ -64,6 +69,9 @@ function IRNWhitelist.Players:SetNickname(steamid64, name)
 			sql.SQLStr(name)
 		)
 	)
+
+	hook.Run("IRNWhitelistPlayerNicknameSet", steamid64, name)
+	return true
 end
 
 --- Get player nickname from database
@@ -79,7 +87,7 @@ function IRNWhitelist.Players:GetNickname(steamid64)
 		return ply:Nick()
 	end
 
-	return sql.QueryRow(
+	return sql.QueryValue(
 		string.format("SELECT name FROM %s WHERE steamid64 = %s;", self._SQLTable, sql.SQLStr(steamid64))
 	) or steamid64
 end

@@ -15,10 +15,14 @@ return {
 		whitelist_settings_saved = "Whitelist settings was saved into 'data/simple_whitelist/settings.json' file.",
 		whitelist_settiings_loaded = "Whitelist settings were loaded from the file.",
 		whitelist_status = "Whitelist is now {{1}}.\nServer language: {{2}}.\n\nPassword join is now {{3}}.\nOn whitelist enabling players and bots {{4}}.\nOn whitelist enabling bots {{5}}.\nConsole messages logging is now {{6}}.\nSave player names in DB is now {{7}}.\nSave this settings into file is now {{8}}.\n\nPlayer kick reason (if him not whitelisted): {{9}}.\nKick reason while enabling whitelist (if player not whitelisted): {{10}}.\n\nTime format: {{11}}.\nDate format: {{12}}.",
+		whitelist_ipassword_set = "Individual password (****) has been set for player {{1}}.",
+		whitelist_ipassword_removed = "Individual password has been removed from player {{1}}.",
 
-		help_add = "Usage: whitelist_add <SteamID(64)/Name> [once (1/0)]",
-		help_remove = "Usage: whitelist_remove <SteamID(64)/Name>",
-		help_set = "Usage: whitelist_set <SteamID(64)/Name> [once (1/0)]",
+		help_add = "Usage: whitelist_add <SteamID(64)/AccountID/Nickname> [Once? (1/0)]",
+		help_remove = "Usage: whitelist_remove <SteamID(64)/AccountID/Nickname>",
+		help_set = "Usage: whitelist_set <SteamID(64)/AccountID/Nickname> [Once? (1/0)]",
+		help_ipassword_set = "Usage: whitelist_ipassword_set <SteamID(64)/AccountID/Nickname> <Password>",
+		help_ipassword_remove = "Usage: whitelist_ipassword_remove <SteamID(64)/AccountID/Nickname>",
 
 		invalid_player = "No players found matching the specified criteria ({{1}}).", -- criteria
 

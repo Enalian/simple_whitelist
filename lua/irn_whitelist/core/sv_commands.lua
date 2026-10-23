@@ -188,7 +188,7 @@ function IRNWhitelist.Commands:Load()
 
 	self.New("clear", function()
 		if IRNWhitelist.Whitelist:PlayersCount() < 1 then
-			IRNWhitelist.Console.Error("commands.whitelist_empty")
+			IRNWhitelist.Console:Error("commands.whitelist_empty")
 			return
 		end
 
@@ -240,4 +240,49 @@ function IRNWhitelist.Commands:Load()
 		IRNWhitelist.Settings:Apply()
 		IRNWhitelist.Console:Success("commands.whitelist_settings_loaded")
 	end, "Load whitelist settings")
+
+	self.New("ipassword_set", function(args)
+		if not args[1] or (isstring(args[1]) and #args[1] < 1) then
+			IRNWhitelist.Console:Help("commands.help_ipassword_set")
+			return
+		end
+		if not args[2] or (isstring(args[2]) and #args[2] < 1) then
+			IRNWhitelist.Console:Help("commands.help_ipassword_set")
+			return
+		end
+
+		local steamid, name = IRNWhitelist.Players:FromAny(args[1])
+		if not steamid then
+			IRNWhitelist.Console:Error("commands.invalid_player", args[1])
+			return
+		end
+
+		if IRNWhitelist.Whitelist.IsOn() and not IRNWhitelist.Whitelist.IsPlayerWhitelisted(steamid) then
+			IRNWhitelist.Whitelist:AddPlayer(steamid)
+		elseif not IRNWhitelist.Whitelist.IsPlayerWhitelisted(steamid) then
+			IRNWhitelist.Console:Error("commands.not_in_whitelist", name)
+			return
+		end
+		IRNWhitelist.IPasswords:SetPassword(steamid, args[2])
+
+		local print_name = IRNWhitelist.Utils.PrintPlayerName(name, steamid)
+		IRNWhitelist.Console:Success("commands.whitelist_ipassword_set", print_name)
+	end, "Set individual password for player")
+
+	self.New("ipassword_remove", function(args)
+		if not args[1] or (isstring(args[1]) and #args[1] < 1) then
+			IRNWhitelist.Console:Help("commands.help_ipassword_remove")
+			return
+		end
+
+		local steamid, name = IRNWhitelist.Players:FromAny(args[1])
+		if not steamid then
+			IRNWhitelist.Console:Error("commands.invalid_player", args[1])
+			return
+		end
+
+		IRNWhitelist.IPasswords:RemovePassword(steamid)
+		local print_name = IRNWhitelist.Utils.PrintPlayerName(name, steamid)
+		IRNWhitelist.Console:Success("commands.whitelist_ipassword_removed", print_name)
+	end, "Remove player individual password")
 end

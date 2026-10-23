@@ -188,3 +188,62 @@ function IRNWhitelist.Utils.PrintPlayerName(plyOrName, sid64, logs_print)
 		return plyOrName == sid64 and sid64 or string.format("%s%s(%s)", plyOrName, logs_print and "" or " ")
 	end
 end
+
+--- Generate password salt or server pepper
+---@param length? number Salt or pepper length
+---@return string
+function IRNWhitelist.Utils.GenPasswordSaltPepper(length)
+	length = tonumber(length) or 32
+
+	local result = {}
+	local charsetLength = #charset
+
+	math.randomseed(os.time() + math.random(1, 10000))
+	for i = 1, length do
+		local randIndex = math.random(1, charsetLength)
+		result[i] = string.sub(charset, randIndex, randIndex)
+	end
+
+	return table.concat(result)
+end
+
+--- Generate password hash
+---@param password string Password to generate hash from
+---@param salt? string Unique password salt
+---@param pepper string Unique server pepper
+---@return string
+---@return string
+function IRNWhitelist.Utils.GenPasswordHash(password, salt, pepper)
+	if not isstring(password) then
+		return "", ""
+	end
+	salt = (isstring(salt) and #salt > 0) and salt or IRNWhitelist.Utils.GenPasswordSaltPepper()
+	pepper = (isstring(pepper) and #pepper > 0) and pepper or IRNWhitelist.Utils.GenPasswordSaltPepper(48)
+
+	local currentHash = password .. salt .. pepper
+	for _ = 1, 10000 do
+		currentHash = util.SHA256(currentHash)
+	end
+
+	return currentHash, salt
+end
+
+--- Check if password match with his hash
+---@param input_password string Input password
+---@param input_salt string Input salt
+---@param need_hash string Needed hash
+---@param pepper string Unique server pepper
+---@return boolean
+function IRNWhitelist.Utils.PasswordsMatch(input_password, input_salt, need_hash, pepper)
+	if not isstring(input_password) or #input_password < 1 then
+		return false
+	end
+	if not isstring(input_salt) or #input_salt < 1 then
+		return false
+	end
+	if not isstring(need_hash) or #need_hash < 1 then
+		return false
+	end
+
+	return need_hash == IRNWhitelist.Utils.GenPasswordHash(input_password, input_salt, pepper)
+end

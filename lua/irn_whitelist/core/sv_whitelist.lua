@@ -63,6 +63,7 @@ function IRNWhitelist.Whitelist:AddPlayer(steamid64, once)
 	end
 
 	self.ClearDuplicates()
+	hook.Run("IRNWhitelistPlayerAdded", steamid64, once)
 	return IRNWhitelist.Files:AppendLine("players", string.format("%s%s", steamid64, once and ", once" or ""))
 end
 
@@ -79,6 +80,7 @@ function IRNWhitelist.Whitelist:RemovePlayer(steamid64)
 	end
 
 	self.ClearDuplicates()
+	hook.Run("IRNWhitelistPlayerRemoved", steamid64)
 	return IRNWhitelist.Files:RemoveLine("players", string.format("^%s", steamid64))
 end
 
@@ -100,6 +102,7 @@ function IRNWhitelist.Whitelist:RemovePlayerOnce(steamid64)
 	end
 
 	self.ClearDuplicates()
+	hook.Run("IRNWhitelistPlayerRemovedOnce", steamid64)
 	return IRNWhitelist.Files:ReplaceLine("players", string.format("^%s,%%s*once", steamid64), steamid64)
 end
 
@@ -133,6 +136,8 @@ function IRNWhitelist.Whitelist:SetPlayers(players)
 			end
 		end
 	end
+
+	hook.Run("IRNWhitelistPlayersSetted", players)
 end
 
 --- Check if player whitelisted or not
@@ -276,6 +281,9 @@ function IRNWhitelist.Whitelist:Load()
 			end
 
 			if self.NeedPassword() and svPassword ~= clPassword then
+				return false, "#GameUI_ServerRejectBadPassword"
+			end
+			if not IRNWhitelist.IPasswords:Check(steamid64, clPassword) then
 				return false, "#GameUI_ServerRejectBadPassword"
 			end
 

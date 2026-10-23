@@ -212,7 +212,8 @@ end
 
 --- Main module load function
 function IRNWhitelist.CVars:Load()
-	self:New("enable", 0, FCVAR_NOTIFY, "Enable whitelist. (1 - on, 0 - off)", 0, 1, function(_, newValue)
+	self:New("enable", 0, FCVAR_NOTIFY, "Enable whitelist. (1 - on, 0 - off)", 0, 1, function(oldValue, newValue)
+		oldValue = IRNWhitelist.Utils.Int2Bool(tonumber(oldValue) or 0)
 		newValue = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
 
 		if newValue then
@@ -255,6 +256,10 @@ function IRNWhitelist.CVars:Load()
 				end
 			end
 		end
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistEnabled", newValue)
+		end
 	end)
 
 	self:New(
@@ -264,21 +269,40 @@ function IRNWhitelist.CVars:Load()
 		"Kick reason on player join.",
 		nil,
 		nil,
-		function(_, newValue)
+		function(oldValue, newValue)
 			IRNWhitelist.Settings:Set("joinkick_reason", newValue)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistJoinKickReasonChanged", newValue)
+			end
 		end
 	)
 
-	self:New("password_check", 0, FCVAR_ARCHIVE, "Check password on player join.", 0, 1, function(_, newValue)
-		IRNWhitelist.Settings:Set("password_check", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0))
+	self:New("password_check", 0, FCVAR_ARCHIVE, "Check password on player join.", 0, 1, function(oldValue, newValue)
+		local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
+		IRNWhitelist.Settings:Set("password_check", nv)
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistPasswordCheckEnabled", nv)
+		end
 	end)
 
-	self:New("kick", 1, FCVAR_ARCHIVE, "Kick players on whitelist enabling.", 0, 1, function(_, newValue)
-		IRNWhitelist.Settings:Set("kick", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1))
+	self:New("kick", 1, FCVAR_ARCHIVE, "Kick players on whitelist enabling.", 0, 1, function(oldValue, newValue)
+		local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1)
+		IRNWhitelist.Settings:Set("kick", nv)
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistKickPlayersAndBotsEnabled", nv)
+		end
 	end)
 
-	self:New("kick_bots", 0, FCVAR_ARCHIVE, "Kick bots on enabling whitelist", 0, 1, function(_, newValue)
-		IRNWhitelist.Settings:Set("kick_bots", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0))
+	self:New("kick_bots", 0, FCVAR_ARCHIVE, "Kick bots on enabling whitelist", 0, 1, function(oldValue, newValue)
+		local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
+		IRNWhitelist.Settings:Set("kick_bots", nv)
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistKickBotsEnabled", nv)
+		end
 	end)
 
 	self:New(
@@ -288,25 +312,63 @@ function IRNWhitelist.CVars:Load()
 		"Kick reason on player kick.",
 		nil,
 		nil,
-		function(_, newValue)
+		function(oldValue, newValue)
 			IRNWhitelist.Settings:Set("kick_reason", newValue)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistKickReasonChanged", newValue)
+			end
 		end
 	)
 
-	self:New("date_format", "%x", FCVAR_ARCHIVE, "Date format (for reasons filler).", nil, nil, function(_, newValue)
-		IRNWhitelist.Settings:Set("date_format", newValue)
+	self:New(
+		"date_format",
+		"%x",
+		FCVAR_ARCHIVE,
+		"Date format (for reasons filler).",
+		nil,
+		nil,
+		function(oldValue, newValue)
+			IRNWhitelist.Settings:Set("date_format", newValue)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistDateFormatChanged", newValue)
+			end
+		end
+	)
+
+	self:New(
+		"time_format",
+		"%X",
+		FCVAR_ARCHIVE,
+		"Time format (for reasons filler).",
+		nil,
+		nil,
+		function(oldValue, newValue)
+			IRNWhitelist.Settings:Set("time_format", newValue)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistTimeFormatChanged", newValue)
+			end
+		end
+	)
+
+	self:New("logs", 0, FCVAR_ARCHIVE, "Write action logs.", 0, 1, function(oldValue, newValue)
+		local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
+		IRNWhitelist.Settings:Set("logs", nv)
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistLogsEnabled", nv)
+		end
 	end)
 
-	self:New("time_format", "%X", FCVAR_ARCHIVE, "Time format (for reasons filler).", nil, nil, function(_, newValue)
-		IRNWhitelist.Settings:Set("time_format", newValue)
-	end)
+	self:New("save_names", 1, FCVAR_ARCHIVE, "Save names to SQL table.", 0, 1, function(oldValue, newValue)
+		local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1)
+		IRNWhitelist.Settings:Set("save_names", nv)
 
-	self:New("logs", 0, FCVAR_ARCHIVE, "Write action logs.", 0, 1, function(_, newValue)
-		IRNWhitelist.Settings:Set("logs", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1))
-	end)
-
-	self:New("save_names", 1, FCVAR_ARCHIVE, "Save names to SQL table.", 0, 1, function(_, newValue)
-		IRNWhitelist.Settings:Set("save_names", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 1))
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistSaveNamesEnabled", nv)
+		end
 	end)
 
 	self:New(
@@ -316,13 +378,55 @@ function IRNWhitelist.CVars:Load()
 		"Save ConVars settings into settings.json file.",
 		0,
 		1,
-		function(_, newValue)
-			IRNWhitelist.Settings:Set("save_settings", IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0))
+		function(oldValue, newValue)
+			local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
+			IRNWhitelist.Settings:Set("save_settings", nv)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistSaveSettingsEnabled", nv)
+			end
 		end
 	)
 
-	self:New("language", "en", FCVAR_ARCHIVE, "Language/Язык", nil, nil, function(_, newValue)
+	self:New("language", "en", FCVAR_ARCHIVE, "Language/Язык", nil, nil, function(oldValue, newValue)
 		IRNWhitelist.Settings:Set("language", newValue)
 		IRNWhitelist.Lang:Load()
+
+		if oldValue ~= newValue then
+			hook.Run("IRNWhitelistLanguageChanged", newValue)
+		end
 	end)
+
+	self:New(
+		"ipasswords_enable",
+		0,
+		FCVAR_ARCHIVE,
+		"Enable individual password module.",
+		0,
+		1,
+		function(oldValue, newValue)
+			local nv = IRNWhitelist.Utils.Int2Bool(tonumber(newValue) or 0)
+			IRNWhitelist.Settings:Set("ipasswords_enable", nv)
+
+			if oldValue ~= newValue then
+				hook.Run("IRNWhitelistIPasswordsModuleEnabled", nv)
+			end
+		end
+	)
+
+	self:New(
+		"ipasswords_pepper",
+		IRNWhitelist.Utils.GenPasswordSaltPepper(48),
+		FCVAR_ARCHIVE,
+		"Server pepper (for password generation).",
+		nil,
+		nil,
+		function(oldValue, newValue)
+			IRNWhitelist.Settings:Set("ipasswords_pepper", newValue)
+			if oldValue ~= newValue then
+				IRNWhitelist.IPasswords:RemoveAllPasswords()
+				hook.Run("IRNWhitelistServerPepperChanged", newValue)
+			end
+		end
+	)
 end

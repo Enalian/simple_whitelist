@@ -173,6 +173,7 @@ IRNWhitelist.Commands:Load()
 IRNWhitelist.Players:Load()
 IRNWhitelist.Settings:Load()
 IRNWhitelist.Whitelist:Load()
+IRNWhitelist.IPasswords:Load()
 
 easyApi("*", IRNWhitelist.Whitelist, IRNWhitelist, nil, nil, { "Load" })
 

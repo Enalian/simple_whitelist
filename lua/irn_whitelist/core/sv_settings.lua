@@ -11,6 +11,8 @@ IRNWhitelist.Settings = {
 		save_names = "bool",
 		save_settings = "bool",
 		language = "string",
+		ipasswords_enable = "bool",
+		ipasswords_pepper = "string",
 	},
 }
 
@@ -37,6 +39,8 @@ function IRNWhitelist.Settings:Set(param, value)
 
 	local settings = self.Read()
 	settings[param] = value
+
+	hook.Run("IRNWhitelistSettingsParamSet", param, value)
 	return self:Write(settings)
 end
 
@@ -48,6 +52,7 @@ function IRNWhitelist.Settings:Save()
 		settings[cvar_name] = IRNWhitelist.CVars:Get(cvar_name, cvar_type, nil)
 	end
 
+	hook.Run("IRNWhitelistSettingsSaved", settings)
 	return self:Write(settings)
 end
 
@@ -78,6 +83,7 @@ function IRNWhitelist.Settings:Write(settings)
 		end
 	end
 
+	hook.Run("IRNWhitelistSettingsWrited", settings)
 	return IRNWhitelist.Files:WriteJSON("settings", settings)
 end
 
@@ -111,6 +117,7 @@ function IRNWhitelist.Settings:Apply()
 
 		IRNWhitelist.CVars:Set(name, self._Allowed[name], v)
 	end
+	hook.Run("IRNWhitelistSettingsApplied", self.Read())
 end
 
 --- Collect all settings into table (key = parameter name, value = parameter value)
