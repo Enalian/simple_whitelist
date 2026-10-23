@@ -6,8 +6,6 @@
 
 Установка **Mantle** не является обязательной, без него просто не будет доступно меню.
 
-Чистая версия без меню находится в ветке [`core`](https://github.com/Enalian/simple_whitelist/blob/core).
-
 ## 🇬🇧 English version
 
 English version of this file you can read [here](https://github.com/Enalian/simple_whitelist/blob/master/README.md).
@@ -20,9 +18,9 @@ English version of this file you can read [here](https://github.com/Enalian/simp
 | `whitelist_off` | *Нет* | Выключить белый список. |
 | `whitelist_toggle` | *Нет* | Переключить (включить или выключить) белый список. |
 | `whitelist_status` | *Нет* | Посмотреть состояние (настройки) белого списка. |
-| `whitelist_add` | `<SteamID(64)/AccountID/Никнейм> [Единоразово?]` | Добавить игрока в белый список. |
+| `whitelist_add` | `<SteamID(64)/AccountID/Никнейм> [Единоразово? (1/0)]` | Добавить игрока в белый список. |
 | `whitelist_remove` | `<SteamID(64)/AccountID/Никнейм>` | Удалить игрока из белого списка. |
-| `whitelist_set` | ` <SteamID(64)/AccountID/Никнейм> [Единоразово?]` | Очистить белый список и добавить в него игрока. |
+| `whitelist_set` | `<SteamID(64)/AccountID/Никнейм> [Единоразово? (1/0)]` | Очистить белый список и добавить в него игрока. |
 | `whitelist_clear` | *Нет* | Очистить белый список. |
 | `whitelist_clear_duplicates` | *Нет* | Очистить белый список от дублирующийся игроков. |
 | `whitelist_players` | *Нет* | Посмотреть список игроков в белом списке. |
@@ -39,6 +37,9 @@ English version of this file you can read [here](https://github.com/Enalian/simp
 | `whitelist_save_settings` | `<1/0>` | Сохранять настройки в файл? (1 = Да, 0 = Нет) |
 | `whitelist_logs` | `<1/0>` | Включить логирование сообщений и действий? (1 = Да, 0 = Нет) |
 | `whitelist_language` | `<Язык>` | Установить язык сервера. |
+| `whitelist_ipasswords_enable` | `<1/0>` | Включить модуль индивидуальных паролей. |
+| `whitelist_ipassword_set` | `<SteamID(64)/AccountID/Никнейм> <Пароль>` | Установить игроку индивидуальный пароль для входа на сервер. |
+| `whitelist_ipassword_remove` | `<SteamID(64)/AccountID/Никнейм>` | Убрать индивидуальный пароль для игрока. |
 
 ## ⚪ Заполнители для причин
 
