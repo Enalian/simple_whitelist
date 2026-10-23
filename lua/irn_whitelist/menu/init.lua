@@ -17,6 +17,8 @@ local function hasAccess(ply)
 	end
 end
 
+--- Collect data for menu
+---@return table
 local function collectData()
 	local data = {
 		Enabled = IRNWhitelist.CVars:Get("enable", "bool", false),
@@ -103,10 +105,14 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			)
 		)
 
-		net.Start("irn_whitelist.command")
-		net.WriteString("open")
-		net.WriteCompressedTable(collectData())
-		net.Send(ply)
+		timer.Simple(1, function()
+			if IsValid(ply) then
+				net.Start("irn_whitelist.command")
+				net.WriteString("open")
+				net.WriteCompressedTable(collectData())
+				net.Send(ply)
+			end
+		end)
 	elseif name == "del_player" then
 		local sid64 = net.ReadString()
 		if not IRNWhitelist.Players.IsValidSteamID64(sid64) then
@@ -141,10 +147,14 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			)
 		)
 
-		net.Start("irn_whitelist.command")
-		net.WriteString("open")
-		net.WriteCompressedTable(collectData())
-		net.Send(ply)
+		timer.Simple(1, function()
+			if IsValid(ply) then
+				net.Start("irn_whitelist.command")
+				net.WriteString("open")
+				net.WriteCompressedTable(collectData())
+				net.Send(ply)
+			end
+		end)
 	elseif name == "set_ipassword" then
 		local sid64 = net.ReadString()
 		local password = net.ReadString()
