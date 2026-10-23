@@ -117,6 +117,53 @@ net.Receive("irn_whitelist.command", function(_, ply)
 				IRNWhitelist.Utils.PrintPlayerName(IRNWhitelist.Players:GetNickname(sid64), sid64, true)
 			)
 		)
+	elseif name == "set_ipassword" then
+		local sid64 = net.ReadString()
+		local password = net.ReadString()
+
+		if #password > 0 then
+			if IRNWhitelist.Whitelist.IsOn() and not IRNWhitelist.Whitelist.IsPlayerWhitelisted(sid64) then
+				IRNWhitelist.Whitelist:AddPlayer(sid64)
+			elseif not IRNWhitelist.Whitelist.IsPlayerWhitelisted(sid64) then
+				net.Start("irn_whitelist.message")
+				net.WriteString("notify")
+				net.WriteCompressedTable({ "commands.not_in_whitelist", IRNWhitelist.Players:GetNickname(sid64) })
+				net.WriteBool(false)
+				net.Send(ply)
+				return
+			end
+			IRNWhitelist.IPasswords:SetPassword(sid64, password)
+
+			net.Start("irn_whitelist.message")
+			net.WriteString("notify")
+			net.WriteCompressedTable({ "commands.whitelist_ipassword_set", IRNWhitelist.Players:GetNickname(sid64) })
+			net.WriteBool(false)
+			net.Send(ply)
+
+			IRNWhitelist.Utils.Log(
+				IRNWhitelist.Lang:FormatPhrase(
+					"log.player_set_ipassword",
+					IRNWhitelist.Utils.PrintPlayerName(ply, nil, true),
+					IRNWhitelist.Utils.PrintPlayerName(IRNWhitelist.Players:GetNickname(sid64), sid64, true)
+				)
+			)
+		else
+			IRNWhitelist.IPasswords:RemovePassword(sid64)
+
+			net.Start("irn_whitelist.message")
+			net.WriteString("notify")
+			net.WriteCompressedTable({ "commands.whitelist_ipassword_removed", IRNWhitelist.Players:GetNickname(sid64) })
+			net.WriteBool(false)
+			net.Send(ply)
+
+			IRNWhitelist.Utils.Log(
+				IRNWhitelist.Lang:FormatPhrase(
+					"log.player_remove_ipassword",
+					IRNWhitelist.Utils.PrintPlayerName(ply, nil, true),
+					IRNWhitelist.Utils.PrintPlayerName(IRNWhitelist.Players:GetNickname(sid64), sid64, true)
+				)
+			)
+		end
 	elseif name == "open" then
 		local data = {
 			Enabled = IRNWhitelist.CVars:Get("enable", "bool", false),

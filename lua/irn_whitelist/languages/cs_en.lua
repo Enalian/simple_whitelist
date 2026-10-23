@@ -60,6 +60,8 @@ return {
 		save_settings = "Settings has been changed by {{1}}",
 		add_player_to_whitelist = "Player {{2}} has been whitelisted by {{1}}",
 		remove_player_from_whitelist = "Player {{2}} has been removed from the whitelist by {{1}}",
+		player_set_ipassword = "",
+		player_remove_ipassword = "",
 	},
 
 	messages = {
@@ -104,5 +106,10 @@ return {
 		not_sid64 = "This is a not SteamID64.",
 		not_rights = "You don't have rights to do that.",
 		not_mantle = "Mantle dont installed on this server, use server console commands.",
+		ipasswords_enable = "Individual passwords",
+		ipasswords_enable_tooltip = "Enable individual player passwords module",
+		player_set_ipassword = "Set IPassword",
+		sip_title = "Individual password set",
+		sip_desc = "Enter new password or leave empty to remove it",
 	},
 }
