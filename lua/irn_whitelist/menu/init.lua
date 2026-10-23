@@ -17,6 +17,24 @@ local function hasAccess(ply)
 	end
 end
 
+local function collectData()
+	local data = {
+		Enabled = IRNWhitelist.CVars:Get("enable", "bool", false),
+		Settings = IRNWhitelist.Settings:Collect(),
+		Players = {},
+	}
+
+	for k, v in pairs(IRNWhitelist.Whitelist.GetPlayers()) do
+		table.insert(data.Players, {
+			nickname = IRNWhitelist.Players:GetNickname(k),
+			sid = k,
+			once = v,
+		})
+	end
+
+	return data
+end
+
 net.Receive("irn_whitelist.command", function(_, ply)
 	local name = net.ReadString()
 	if not hasAccess(ply) then
@@ -87,7 +105,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 
 		net.Start("irn_whitelist.command")
 		net.WriteString("open")
-		net.WriteCompressedTable(data)
+		net.WriteCompressedTable(collectData())
 		net.Send(ply)
 	elseif name == "del_player" then
 		local sid64 = net.ReadString()
@@ -125,7 +143,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 
 		net.Start("irn_whitelist.command")
 		net.WriteString("open")
-		net.WriteCompressedTable(data)
+		net.WriteCompressedTable(collectData())
 		net.Send(ply)
 	elseif name == "set_ipassword" then
 		local sid64 = net.ReadString()
@@ -175,23 +193,9 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			)
 		end
 	elseif name == "open" then
-		local data = {
-			Enabled = IRNWhitelist.CVars:Get("enable", "bool", false),
-			Settings = IRNWhitelist.Settings:Collect(),
-			Players = {},
-		}
-
-		for k, v in pairs(IRNWhitelist.Whitelist.GetPlayers()) do
-			table.insert(data.Players, {
-				nickname = IRNWhitelist.Players:GetNickname(k),
-				sid = k,
-				once = v,
-			})
-		end
-
 		net.Start("irn_whitelist.command")
 		net.WriteString("open")
-		net.WriteCompressedTable(data)
+		net.WriteCompressedTable(collectData())
 		net.Send(ply)
 	end
 end)
