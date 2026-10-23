@@ -109,7 +109,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			table.insert(msg, IRNWhitelist.Players:GetNickname(sid64))
 		end
 
-		net.Start("irn_whitelist.message")
+		net.Start("irn_whitelist.command")
 		net.WriteString("notify")
 		net.WriteCompressedTable(msg)
 		net.WriteBool(false)
@@ -135,7 +135,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			if IRNWhitelist.Whitelist.IsOn() and not IRNWhitelist.Whitelist.IsPlayerWhitelisted(sid64) then
 				IRNWhitelist.Whitelist:AddPlayer(sid64)
 			elseif not IRNWhitelist.Whitelist.IsPlayerWhitelisted(sid64) then
-				net.Start("irn_whitelist.message")
+				net.Start("irn_whitelist.command")
 				net.WriteString("notify")
 				net.WriteCompressedTable({ "commands.not_in_whitelist", IRNWhitelist.Players:GetNickname(sid64) })
 				net.WriteBool(false)
@@ -144,7 +144,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 			end
 			IRNWhitelist.IPasswords:SetPassword(sid64, password)
 
-			net.Start("irn_whitelist.message")
+			net.Start("irn_whitelist.command")
 			net.WriteString("notify")
 			net.WriteCompressedTable({ "commands.whitelist_ipassword_set", IRNWhitelist.Players:GetNickname(sid64) })
 			net.WriteBool(false)
@@ -160,7 +160,7 @@ net.Receive("irn_whitelist.command", function(_, ply)
 		else
 			IRNWhitelist.IPasswords:RemovePassword(sid64)
 
-			net.Start("irn_whitelist.message")
+			net.Start("irn_whitelist.command")
 			net.WriteString("notify")
 			net.WriteCompressedTable({ "commands.whitelist_ipassword_removed", IRNWhitelist.Players:GetNickname(sid64) })
 			net.WriteBool(false)
