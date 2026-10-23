@@ -111,5 +111,7 @@ return {
 		player_set_ipassword = "Set IPassword",
 		sip_title = "Individual password set",
 		sip_desc = "Enter new password or leave empty to remove it",
+		yes = "Yes",
+		no = "No",
 	},
 }

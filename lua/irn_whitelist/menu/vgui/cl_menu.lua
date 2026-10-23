@@ -269,7 +269,11 @@ function PANEL:PlayersBlock(update)
 			self.Players.Table:RemoveRow(1)
 		else
 			for _, v in ipairs(self.Data.Players) do
-				self.Players.Table:AddItem(v.nickname or "-", v.sid, v.once and "Yes" or "No")
+				self.Players.Table:AddItem(
+					v.nickname or "-",
+					v.sid,
+					T(string.format("menu.%s", v.once and "yes" or "no"))
+				)
 			end
 		end
 

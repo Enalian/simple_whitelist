@@ -84,6 +84,11 @@ net.Receive("irn_whitelist.command", function(_, ply)
 				IRNWhitelist.Utils.PrintPlayerName(IRNWhitelist.Players:GetNickname(sid64), sid64, true)
 			)
 		)
+
+		net.Start("irn_whitelist.command")
+		net.WriteString("open")
+		net.WriteCompressedTable(data)
+		net.Send(ply)
 	elseif name == "del_player" then
 		local sid64 = net.ReadString()
 		if not IRNWhitelist.Players.IsValidSteamID64(sid64) then
@@ -117,6 +122,11 @@ net.Receive("irn_whitelist.command", function(_, ply)
 				IRNWhitelist.Utils.PrintPlayerName(IRNWhitelist.Players:GetNickname(sid64), sid64, true)
 			)
 		)
+
+		net.Start("irn_whitelist.command")
+		net.WriteString("open")
+		net.WriteCompressedTable(data)
+		net.Send(ply)
 	elseif name == "set_ipassword" then
 		local sid64 = net.ReadString()
 		local password = net.ReadString()
