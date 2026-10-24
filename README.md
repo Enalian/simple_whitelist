@@ -65,7 +65,7 @@ Time formats for `whitelist_date_format` and `whitelist_time_format` can be foun
 
 ### Steam Workshop
 
-It is recommended to subscribe on the [Workshop]() and add the addon to your server collection. This will allow the addon to update automatically without manual downloading.
+It is recommended to subscribe on the [Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3825350203) and add the addon to your server collection. This will allow the addon to update automatically without manual downloading.
 
 ### Manual Download
 
