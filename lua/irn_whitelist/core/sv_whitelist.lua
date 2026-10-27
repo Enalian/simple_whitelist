@@ -275,7 +275,7 @@ end
 --- Main module loader function
 function IRNWhitelist.Whitelist:Load()
 	hook.Add("CheckPassword", "irn_whitelist.check", function(steamid64, ipAddress, svPassword, clPassword, name)
-		self._PasswordProtected = #svPassword > 0
+		self._PasswordProtected = isstring(svPassword) and #svPassword > 0
 
 		if self.IsOn() then
 			if not self.IsPlayerWhitelisted(steamid64) then
@@ -289,6 +289,16 @@ function IRNWhitelist.Whitelist:Load()
 				return false, "#GameUI_ServerRejectBadPassword"
 			end
 
+			local res, err = hook.Run("IRNWhitelistCanPlayerJoin", steamid64, {
+				ipa = IRNWhitelist.Utils.ParseIP(ipAddress),
+				password = clPassword,
+				nick = name,
+			})
+			if res == false then
+				err = err or "Manually rejected."
+				return false, "[Simple Whitelist]: " .. tostring(err)
+			end
+
 			local ply = self:GetPlayer(steamid64)
 			if ply and ply.once then
 				self:RemovePlayer(steamid64)
@@ -296,8 +306,10 @@ function IRNWhitelist.Whitelist:Load()
 		end
 	end, HOOK_HIGH)
 
-	function game.IsPasswordProtected()
-		return self._PasswordProtected
+	if not isfunction(game.IsPasswordProtected) then
+		function game.IsPasswordProtected()
+			return self._PasswordProtected
+		end
 	end
 
 	easyConVarFunc("joinkick_reason", "string", "JoinKickReason")
