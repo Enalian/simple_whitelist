@@ -7,6 +7,9 @@ List of all available custom hooks and events.
 ## Events & Hooks
 ---
 
+[**`IRNWhitelistCanPlayerJoin`**](IRNWhitelistCanPlayerJoin.md)`(any steamid64, any arg2)`  
+&emsp;No description provided.
+
 [**`IRNWhitelistCleared`**](IRNWhitelistCleared.md)`()`  
 &emsp;Calls when whitelist has been cleared.
 

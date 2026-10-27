@@ -9,6 +9,7 @@ nav:
   - Home: index.md
   - Hooks:
     - Hooks/index.md
+    - IRNWhitelistCanPlayerJoin: Hooks/IRNWhitelistCanPlayerJoin.md
     - IRNWhitelistCleared: Hooks/IRNWhitelistCleared.md
     - IRNWhitelistDateFormatChanged: Hooks/IRNWhitelistDateFormatChanged.md
     - IRNWhitelistDuplicatesCleared: Hooks/IRNWhitelistDuplicatesCleared.md
